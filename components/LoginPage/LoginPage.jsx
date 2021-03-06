@@ -9,9 +9,13 @@ import Col from '../Shared/Col'
 import Header from '../Shared/Header'
 import RouteButton from '../Shared/RouteButton'
 import Textinput from '../Shared/TextInput'
-import { Route } from 'react-router-native';
 
 const LoginPage = ({registered}) =>{
+    const rowSizes=[
+        12,12,6,10,1,10,1,10,18,10,10
+    ]
+    if(rowSizes.reduce((a,b) => a + b,0) !== 100){alert("grid error, row sizes = " + rowSizes.reduce((a,b) => a + b,0))}
+    
     const [emailValue, setEmailValue] = useState("Email");
     const [passwordValue, setPasswordValue] = useState("Password");
 
@@ -23,52 +27,52 @@ const LoginPage = ({registered}) =>{
 
     return (
         <View style={styles.body}>
-            <Row size={4}>
+            <Row size={rowSizes[0]}>
                 <Col >
                     <Header HeaderText={"Welcome to ChillBot"}/>
                 </Col>
             </Row>
-            <Row size={3}></Row>
-            <Row size={2}>
+            <Row size={rowSizes[1]}></Row>
+            <Row size={rowSizes[2]}>
                 <Col size={1}></Col>
                 <Col size={5} position={midLeft}>
                     <Text>Login</Text>
                 </Col>
                 <Col size={1}></Col>
             </Row>
-            <Row size={3}>
+            <Row size={rowSizes[3]}>
                 <Col size={1}></Col>
                 <Col size={5} position={mid}>
                     <Textinput value={emailValue} setValue={setEmailValue}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
-            <Row size={1}></Row>
-            <Row size={3}>
+            <Row size={rowSizes[4]}></Row>
+            <Row size={rowSizes[5]}>
                 <Col size={1}></Col>
                 <Col size={5} position={mid}>
                     <Textinput value={passwordValue} setValue={setPasswordValue}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
-            <Row size={1}></Row>
+            <Row size={rowSizes[6]}></Row>
             
-            <Row size={3}>
+            <Row size={rowSizes[7]}>
                 <Col size={1}></Col>
                 <Col size={5} position={mid}>
                     <RouteButton path={"/registerPage1"} text={"Register"} colour={colourScheme.Abstract}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
-            <Row size={3}></Row>
-            <Row size={3}>
+            <Row size={rowSizes[8]}></Row>
+            <Row size={rowSizes[9]}>
                 <Col size={1}></Col>
                 <Col size={5} position={mid}>
                     <RouteButton path={"/home"} text={"Login"} colour={colourScheme.LightTone}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
-            <Row size={3}></Row>
+            <Row size={rowSizes[10]}></Row>
         </View>
     )
 }

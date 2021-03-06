@@ -10,7 +10,7 @@ const Row = ({children, size}) =>{
             alignItems:'center',
             width:'100%',
             height:'100%',
-            border:'solid black'
+            //border:'solid black'
         }
     })
 

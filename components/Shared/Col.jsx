@@ -5,7 +5,7 @@ const Col = ({children, size, position}) =>{
     const styles= StyleSheet.create({
         col:{
             flex:size ? size : 1,
-            border:'dotted black',
+            //border:'dotted black',
             ...position,
             height:'100%'
         }
