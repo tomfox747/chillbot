@@ -30,7 +30,7 @@ const LoginRouter = () =>{
         <View style={styles.body}>
             <NativeRouter>
                 
-                <Route exact path="/" component={HomePage}/>
+                <Route exact path="/" component={DailyEntryForm}/>
                 <Route path="/registered" component={() =>{
                     return <LoginPage registered={true}/>
                 }}/>

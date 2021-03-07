@@ -10,7 +10,7 @@ import RouteButton from '../Shared/RouteButton'
 const HomePage = () =>{
     const [nickname, setNickname] = useState("tom")
     const rowSizes = [
-        12,14,11,3,11,3,11,30
+        12,14,11,3,11,3,11,35
     ]
     if(rowSizes.reduce((a,b) => a + b) !== 100){console.log("grid error, row sizes = " + rowSizes.reduce((a,b) => a + b))}
 
