@@ -28,7 +28,7 @@ const LoginPage = ({registered}) =>{
     return (
         <View style={styles.body}>
             <Row size={rowSizes[0]}>
-                <Col >
+                <Col>
                     <Header HeaderText={"Welcome to ChillBot"}/>
                 </Col>
             </Row>
@@ -60,7 +60,7 @@ const LoginPage = ({registered}) =>{
             <Row size={rowSizes[7]}>
                 <Col size={1}></Col>
                 <Col size={5} position={mid}>
-                    <RouteButton path={"/registerPage1"} text={"Register"} colour={colourScheme.Abstract}/>
+                    <RouteButton path={"/home"} text={"Login"} colour={colourScheme.LightTone}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -68,7 +68,7 @@ const LoginPage = ({registered}) =>{
             <Row size={rowSizes[9]}>
                 <Col size={1}></Col>
                 <Col size={5} position={mid}>
-                    <RouteButton path={"/home"} text={"Login"} colour={colourScheme.LightTone}/>
+                    <RouteButton path={"/registerPage1"} text={"Register"} colour={colourScheme.Abstract}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>

@@ -18,6 +18,8 @@ import ViewEntriesPage from '../DiaryPage/ViewEntriesPage'
 import NeedAChatPage from '../NeedAChatPage/NeedAChagePage'
 import HelpSomeoneOutPage from '../HelpSomeoneOutPage/HelpSomeoneOutPage'
 
+import CheerMeUpPage from '../CheerMeUpPage'
+
 import CalmZoneSetupPage from '../CalmZonePage/CalmZoneSetupPage'
 import CalmZonePage from '../CalmZonePage/CalmZonePage'
 
@@ -53,6 +55,7 @@ const LoginRouter = () =>{
                 <Route path="/needAChatPage"component={NeedAChatPage}/>
                 <Route path="/helpSomeoneOutPage"component={HelpSomeoneOutPage}/>
 
+                <Route path="/cheerMeUpPage" component={CheerMeUpPage}/>
 
                 <Route path="/calmZoneSetupPage"component={CalmZoneSetupPage}/>
                 <Route path="/calmZonePage"component={CalmZonePage}/>
@@ -64,8 +67,6 @@ const LoginRouter = () =>{
         </View>
     )
 }
-
-//Don't forget to add in the cheer me up section
 
 const styles= StyleSheet.create({
     body:{

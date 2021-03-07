@@ -10,6 +10,7 @@ const RouteButton = ({path,text,colour}) =>{
     const styles = StyleSheet.create({
         routeButton:{
             backgroundColor: !colour ? colourScheme.LightTone : colour,
+            borderRadius:'5px',
             width:'100%',
             height:'100%',
             ...mid
