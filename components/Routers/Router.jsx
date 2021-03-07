@@ -18,7 +18,7 @@ import ViewEntriesPage from '../DiaryPage/ViewEntriesPage'
 import NeedAChatPage from '../NeedAChatPage/NeedAChagePage'
 import HelpSomeoneOutPage from '../HelpSomeoneOutPage/HelpSomeoneOutPage'
 
-import CheerMeUpPage from '../CheerMeUpPage'
+import CheerMeUpPage from '../CheerMeUpPage/CheerMeUpPage'
 
 import CalmZoneSetupPage from '../CalmZonePage/CalmZoneSetupPage'
 import CalmZonePage from '../CalmZonePage/CalmZonePage'
@@ -30,7 +30,7 @@ const LoginRouter = () =>{
         <View style={styles.body}>
             <NativeRouter>
                 
-                <Route exact path="/" component={LoginPage}/>
+                <Route exact path="/" component={RegistrationPageTwo}/>
                 <Route path="/registered" component={() =>{
                     return <LoginPage registered={true}/>
                 }}/>

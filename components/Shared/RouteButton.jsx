@@ -14,6 +14,9 @@ const RouteButton = ({path,text,colour}) =>{
             width:'100%',
             height:'100%',
             ...mid
+        },
+        text:{
+            color:'white'
         }
     })
 
@@ -21,7 +24,7 @@ const RouteButton = ({path,text,colour}) =>{
         <View style={styles.routeButton}>
             <Link to={path}>
                 <View>
-                    <Text>
+                    <Text style={styles.text}>
                         {text}
                     </Text>
                 </View>
