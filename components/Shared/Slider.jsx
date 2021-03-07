@@ -5,7 +5,6 @@ import {midLeft} from '../../assets/styling/flexPositions'
 import colourScheme from '../../assets/styling/colourScheme'
 
 const Slider = ({setValue}) =>{
-    const [viewWidth, setViewWidth] = useState(0)
     const [notches, setNotches] = useState([])
     const [position, setPosition] = useState(0)
 
@@ -24,13 +23,13 @@ const Slider = ({setValue}) =>{
             return Math.abs(b - pos) < Math.abs(a - pos) ? b : a;
         });
         const idx = notches.indexOf(closest)
+        setValue(idx)
         setPosition(notches[idx])
     }
 
     const handleLayout = (e) =>{
         let width = e.nativeEvent.layout.width
-        setViewWidth(width)
-        let notchSize = e.nativeEvent.layout.width / 10 
+        let notchSize = width / 10 
         let notches_p = [
             notchSize * 0,
             notchSize * 1,

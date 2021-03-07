@@ -17,12 +17,17 @@ const RouteButton = ({path,text,colour}) =>{
         },
         text:{
             color:'white'
+        },
+        buttonBody:{
+            width:"100%",
+            height:"100%",
+            ...mid
         }
     })
 
     return (
         <View style={styles.routeButton}>
-            <Link to={path}>
+            <Link to={path} style={styles.buttonBody}>
                 <View>
                     <Text style={styles.text}>
                         {text}

@@ -11,11 +11,13 @@ import Slider from '../Shared/Slider'
 
 const RegistrationPageTwo = () =>{
     const rowSizes = [
-        12,5,5,7,5,10,5,5,10,5,5,10,6,6
+        12,5,5,7,5,10,5,5,10,5,5,10,5,6,5
     ]
     if(rowSizes.reduce((a,b) => a+b) !== 100){alert("grid error, row sizes = " + rowSizes.reduce((a,b) => a+b))}
 
     const [stateOfMind, setStateOfMind] = useState(0)
+    const [sleep, setSleep] = useState(0)
+    const [energy, setEnergy] = useState(0)
 
     return(
         <View style={styles.body}>
@@ -48,7 +50,6 @@ const RegistrationPageTwo = () =>{
                 <Col size={1}></Col>
                 <Col size={5}>
                     <Slider
-                        value={stateOfMind}
                         setValue={setStateOfMind}
                     />
                 </Col>
@@ -67,9 +68,9 @@ const RegistrationPageTwo = () =>{
             <Row size={rowSizes[8]}>
                 <Col size={1}></Col>
                 <Col size={5}>
-                    <Text>
-                        Slider Component
-                    </Text>
+                    <Slider
+                        setValue={setSleep}
+                    />
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -86,9 +87,9 @@ const RegistrationPageTwo = () =>{
             <Row size={rowSizes[11]}>
                 <Col size={1}></Col>
                 <Col size={5}>
-                    <Text>
-                        Slider component
-                    </Text>
+                    <Slider
+                        setValue={setEnergy}
+                    />
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -97,10 +98,11 @@ const RegistrationPageTwo = () =>{
                 <Col size={1}></Col>
                 <Col size={5}>
                     <Row>
-                        <Col>
+                        <Col size={12}>
                             <RouteButton path={"/registrationPage1"} text={"Back"} colour={colourScheme.Abstract}/>                        
                         </Col>
-                        <Col>
+                        <Col size={1}></Col>
+                        <Col size={12}>
                             <RouteButton path={"/registered"} text={"Register"} colour={colourScheme.Abstract}/>                        
                         </Col>
                     </Row>
