@@ -79,7 +79,7 @@ const DailyEntryForm = () =>{
                 <Col size={5}>
                     <Row>
                         <Col size={12}>
-                            <RouteButton path="/home" text={"Cancel"} colour={colourScheme.Abstract}/>
+                            <RouteButton path="/diaryPage" text={"Cancel"} colour={colourScheme.Abstract}/>
                         </Col>
                         <Col size={1}></Col>
                         <Col size={12}>
