@@ -18,6 +18,10 @@ const DailyEntryForm = () =>{
     const [exercise, setExercise] = useState(0)
     const [work, setWork] = useState(0)
 
+    console.log("sleep : " + sleep)
+    console.log("exercise : " + exercise)
+    console.log("work : " + work)
+
     return(
         <View style={styles.body}>
             <Row size={rowSizes[0]}><Col><Header HeaderText={"Your mental health diary (new entry)"}/></Col></Row>

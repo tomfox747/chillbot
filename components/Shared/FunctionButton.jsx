@@ -3,7 +3,7 @@ import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 import colourScheme from '../../assets/styling/colourScheme'
 import {midRow} from '../../assets/styling/flexPositions'
 
-const FunctionButton = ({funct, text}) =>{
+const FunctionButton = ({value, funct, text}) =>{
 
     return(
         <View style={styles.body}>

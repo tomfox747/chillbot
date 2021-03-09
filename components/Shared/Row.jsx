@@ -2,7 +2,7 @@ import React from 'react'
 import {View, StyleSheet} from 'react-native'
 import {flexRow} from '../../assets/styling/flexPositions'
 
-const Row = ({children, size}) =>{
+const Row = ({children, size, style}) =>{
     const styles = StyleSheet.create({
         row:{
             ...flexRow,
@@ -10,7 +10,8 @@ const Row = ({children, size}) =>{
             alignItems:'center',
             width:'100%',
             height:'100%',
-            //border:'solid black'
+            //border:'solid black',
+            ...style
         }
     })
 

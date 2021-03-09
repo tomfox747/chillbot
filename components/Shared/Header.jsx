@@ -15,23 +15,26 @@ const Header = ({BackButton, HeaderText}) =>{
     return(
         <View style={styles.body}>
             <Row>
+                {!BackButton && <Col size={1}></Col>}
                 {BackButton
                     ?(
-                        <Col size={1} position={midRow}>
+                        <Col size={4} position={midRow}>
                             <Link to={BackButton.Route} style={styles.backButton}>
                                 <View><Image source={BackImage} style={styles.image}/></View>
                             </Link>
                         </Col>
                     )
                     :(
-                        <Col size={1} position={midRow}>
+                        <Col size={4} position={midRow}>
                             <Image source={LogoImage} style={styles.image}/>
                         </Col>
                     )
                 }
-                <Col size={4} position={midRow}>
+                <Col size={1}></Col>
+                <Col size={20} position={midRow}>
                     <Text style={styles.text}>{HeaderText}</Text>
                 </Col>
+                <Col size={1}></Col>
             </Row>
         </View>
     )

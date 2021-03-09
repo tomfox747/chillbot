@@ -18,6 +18,17 @@ const DiaryEntryForm2 = () =>{
     const [location, setLocation] = useState(null)
     const [activity, setActivity] = useState(null)
 
+    const getLocation = (loc) =>{
+        setLocation(loc)
+    }
+
+    const setActivityFunc = (act) =>{
+        setActivity(act)
+    }
+
+    console.log(location)
+    console.log(activity)
+
     return(
         <View style={styles.body}>
             <Row size={rowSizes[0]}>
@@ -36,7 +47,7 @@ const DiaryEntryForm2 = () =>{
             <Row size={rowSizes[3]}>
                 <Col size={1}></Col>
                 <Col size={20}>
-                    <FunctionButton text={"Get Location"} value={{x:0,y:0}} funct={setLocation}/>
+                    <FunctionButton text={"Get Location"} value={{x:0,y:0}} funct={getLocation}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -48,7 +59,7 @@ const DiaryEntryForm2 = () =>{
                 </Col>
                 <Col size={1}></Col>
             </Row>
-            <ActivityComponent size={rowSizes[6]} funct={setActivity}/>
+            <ActivityComponent size={rowSizes[6]} funct={setActivityFunc}/>
             <Row size={rowSizes[7]}></Row>
             <Row size={rowSizes[8]}>
                 <Col size={1}></Col>
