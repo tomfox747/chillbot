@@ -20,7 +20,7 @@ const styles = StyleSheet.create({
     height:'100vh',
     backgroundColor: colourScheme.Background,
     alignItems: 'center',
-    justifyContent: 'start',
+    justifyContent: 'flex-start',
   },
 });
 

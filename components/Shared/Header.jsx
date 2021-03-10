@@ -53,8 +53,8 @@ const styles = StyleSheet.create({
     },
     image:{
         ...midRow,
-        height:'50px',
-        width:"50px"
+        height:50,
+        width:50
     },
     backButton:{
         ...midRow,

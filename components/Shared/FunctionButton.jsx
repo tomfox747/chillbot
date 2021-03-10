@@ -22,7 +22,7 @@ const styles=StyleSheet.create({
         height:'100%',
         width:"100%",
         backgroundColor: colourScheme.LightTone,
-        borderRadius:'5px'
+        borderRadius:5
     },
     text:{
         ...midRow, 
