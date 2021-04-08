@@ -17,7 +17,8 @@ const styles = StyleSheet.create({
   container: {
     display:'flex',
     flexDirection:'column',
-    height:'100vh',
+    //height:'100vh',
+    flex:1,
     backgroundColor: colourScheme.Background,
     alignItems: 'center',
     justifyContent: 'flex-start',

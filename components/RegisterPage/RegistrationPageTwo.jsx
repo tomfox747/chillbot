@@ -5,7 +5,6 @@ import colourScheme from '../../assets/styling/colourScheme'
 import Row from '../Shared/Row'
 import Col from '../Shared/Col'
 import Header from '../Shared/Header'
-import TextInput from '../Shared/TextInput'
 import RouteButton from '../Shared/RouteButton'
 import Slider from '../Shared/Slider'
 
@@ -50,7 +49,7 @@ const RegistrationPageTwo = () =>{
                 <Col size={1}></Col>
                 <Col size={5}>
                     <Slider
-                        setValue={setStateOfMind}
+                        setValue={setEnergy}
                     />
                 </Col>
                 <Col size={1}></Col>
@@ -69,7 +68,7 @@ const RegistrationPageTwo = () =>{
                 <Col size={1}></Col>
                 <Col size={5}>
                     <Slider
-                        setValue={setSleep}
+                        setValue={setEnergy}
                     />
                 </Col>
                 <Col size={1}></Col>
@@ -99,7 +98,7 @@ const RegistrationPageTwo = () =>{
                 <Col size={5}>
                     <Row>
                         <Col size={12}>
-                            <RouteButton path={"/registrationPage1"} text={"Back"} colour={colourScheme.Abstract}/>                        
+                            <RouteButton path={"/registerPage1"} text={"Back"} colour={colourScheme.Abstract}/>                        
                         </Col>
                         <Col size={1}></Col>
                         <Col size={12}>
@@ -117,7 +116,7 @@ const RegistrationPageTwo = () =>{
 
 const styles=StyleSheet.create({
     body:{
-        height:'100%'
+        flex:1
     }
 })
 

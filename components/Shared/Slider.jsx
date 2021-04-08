@@ -1,71 +1,64 @@
 import React,{useState} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
-import {midLeft} from '../../assets/styling/flexPositions' 
-
+import {topMidRow, midLeft} from '../../assets/styling/flexPositions' 
 import colourScheme from '../../assets/styling/colourScheme'
 
-const Slider = ({setValue}) =>{
-    const [notches, setNotches] = useState([])
-    const [position, setPosition] = useState(0)
+selectorOptions =[1,2,3,4,5,6,7,8,9,10]
 
-    const slider={
-        height:'16px',
-        width:'16px',
-        borderRadius:'8px',
-        backgroundColor:colourScheme.LightTone,
-        marginTop:'-9.5px',
-        marginLeft:`${position}px`
-    }
+const Selector = () =>{
+    const [selected, setSelected] = useState(null)
 
-    const handlePositionChange = (e) =>{
-        let pos = e.nativeEvent.layerX
-        const closest = notches.reduce((a, b) => {
-            return Math.abs(b - pos) < Math.abs(a - pos) ? b : a;
-        });
-        const idx = notches.indexOf(closest)
-        setValue(idx)
-        setPosition(notches[idx])
-    }
-
-    const handleLayout = (e) =>{
-        let width = e.nativeEvent.layout.width
-        let notchSize = width / 10 
-        let notches_p = [
-            notchSize * 0,
-            notchSize * 1,
-            notchSize * 2,
-            notchSize * 3,
-            notchSize * 4,
-            notchSize * 5,
-            notchSize * 6,
-            notchSize * 7,
-            notchSize * 8,
-            notchSize * 9,
-            notchSize * 10,
-        ]
-        setNotches(notches_p)
+    const generateKey = (pre) => {
+        return `${ pre }_${ new Date().getTime() }`;
     }
 
     return(
-        <View onLayout={(e) => handleLayout(e)} style={styles.body}>
-            <TouchableOpacity style={{width:'100%'}} onPress={(e) => handlePositionChange(e)}>
-                <View style={styles.line}></View>
-                <View style={slider}></View>
+        <View style={styles.body}>
+            {
+                selectorOptions.map((element,index) =>{
+                    return(
+                        <SelectorButton key={generateKey(index)} value={element} setValue={setSelected} selected={selected}/>
+                    )
+                })
+            }
+        </View>
+    )
+}
+
+const SelectorButton = ({value, setValue, selected}) =>{
+    return(
+        <View>
+            <TouchableOpacity style={selected !== value ? styles.button : styles.buttonSelected} onPress={() => setValue(value)}>
             </TouchableOpacity>
+            {value === 1 
+                ?<Text>{value}</Text>
+                : value === 10 && <Text>{value}</Text>
+            }
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     body:{
-        height:'40px',
-        ...midLeft
-    },
-    line:{
-        height:'2px',
+        marginTop:10,
+        flexDirection:'row',
+        height:40,
         width:'100%',
-        backgroundColor:'black'
+        ...topMidRow,
+        justifyContent:'space-between'
+    },
+    button:{
+        width:15,
+        height:15,
+        backgroundColor:colourScheme.LightTone,
+        borderRadius:15
+    },
+    buttonSelected:{
+        width:15,
+        height:15,
+        backgroundColor:colourScheme.Abstract,
+        borderRadius:15
     }
 })
 
-export default Slider
+export default Selector
