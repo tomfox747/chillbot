@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import colourScheme from './assets/styling/colourScheme';
 import Router from './components/Routers/Router';
 
-import GlobalStore from './data/GlobalStore'
+import {LocationStore} from './data/GlobalStore'
 import useGeolocation from './hooks/useGeolocation';
 
 
@@ -13,9 +13,9 @@ const App = () => {
 
   return (
     <View style={styles.container}>
-      <GlobalStore.Provider value={{location}}>
+      <LocationStore.Provider value={{location}}>
         <Router/>
-      </GlobalStore.Provider>
+      </LocationStore.Provider>
       <StatusBar style="auto" />
     </View>
   );

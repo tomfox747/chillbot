@@ -8,9 +8,9 @@ import Header from '../Shared/Header'
 import RouteButton from '../Shared/RouteButton'
 
 const HomePage = () =>{
-    const [nickname, setNickname] = useState("tom")
+    const [nickname, setNickname] = useState("NickName")
     const rowSizes = [
-        12,14,11,3,11,3,11,35
+        12,3,6,5,11,3,11,3,11,35
     ]
     if(rowSizes.reduce((a,b) => a + b) !== 100){console.log("grid error, row sizes = " + rowSizes.reduce((a,b) => a + b))}
 
@@ -24,16 +24,16 @@ const HomePage = () =>{
             <Row size={rowSizes[1]}></Row>
             <Row size={rowSizes[2]}>
                 <Col size={1}></Col>
-                <Col size={5}>
-                <RouteButton path={"/diaryPage"} text={"Your Diary"} colour={colourScheme.LightTone}/>
+                <Col size={6}>
+                    <RouteButton path={"/"} text={"Log out"} colour={colourScheme.Abstract}/>
                 </Col>
-                <Col size={1}></Col>
+                <Col size={11}></Col>
             </Row>
             <Row size={rowSizes[3]}></Row>
             <Row size={rowSizes[4]}>
-            <Col size={1}></Col>
+                <Col size={1}></Col>
                 <Col size={5}>
-                    <RouteButton path={"/calmZoneSetupPage"} text={"Calm Zone"} colour={colourScheme.LightTone}/>        
+                <RouteButton path={"/diaryPage"} text={"Your Diary"} colour={colourScheme.LightTone}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -41,11 +41,19 @@ const HomePage = () =>{
             <Row size={rowSizes[6]}>
             <Col size={1}></Col>
                 <Col size={5}>
-                    <RouteButton path={"/settingsPage"} text={"Settings"} colour={colourScheme.LightTone}/>
+                    <RouteButton path={"/calmZoneSetupPage"} text={"Calm Zone"} colour={colourScheme.LightTone}/>        
                 </Col>
                 <Col size={1}></Col>
             </Row>
             <Row size={rowSizes[7]}></Row>
+            <Row size={rowSizes[8]}>
+            <Col size={1}></Col>
+                <Col size={5}>
+                    <RouteButton path={"/settingsPage"} text={"Settings"} colour={colourScheme.LightTone}/>
+                </Col>
+                <Col size={1}></Col>
+            </Row>
+            <Row size={rowSizes[9]}></Row>
         </View>
     )
 }

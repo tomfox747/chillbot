@@ -10,12 +10,13 @@ const useGeoLocation = () =>{
     })
 
     useEffect(() =>{
-        const getLocationAsync = async () => {
+        const initLocation = async () => {
             Permissions.askAsync(Permissions.LOCATION)
             .then((res) =>{
                 if(res.status === "granted"){
                     setLocationPersmission(true)
-                    getLocation();
+                    watchFunc();
+                    //getLocation();
                 }else{
                     setLocationPersmission(false)
                 }
@@ -29,15 +30,30 @@ const useGeoLocation = () =>{
                 longitude:locationResponse.coords.longitude
             });
         };
-
-        getLocationAsync();
-
-        const interval = setInterval(() => {
+        
+        const watchFunc = async () =>{
+            const LOCATION_SETTINGS = {
+                accuracy: Location.Accuracy.Balanced,
+                timeInterval: 1000,
+                distanceInterval: 1,
+              };
+            Location.watchPositionAsync(LOCATION_SETTINGS, (location) => {
+                setLocation({
+                    latitude:location.coords.latitude,
+                    longitude:location.coords.longitude
+                });
+            });
+        }
+        
+        initLocation();
+        //watchLocation();
+        
+        /*const interval = setInterval(() => {
             if(locationPermission === true){
                 getLocation();
             }
-        }, 1000);
-        return () => clearInterval(interval);
+        }, 1000);*/
+        //return () => clearInterval(interval);
     },[])
 
     return location;

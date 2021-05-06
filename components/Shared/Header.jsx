@@ -13,8 +13,6 @@ import BackImage from '../../assets/images/back.png'
 import LogoImage from '../../assets/images/Logo.png'
 
 const Header = ({BackButton, HeaderText}) =>{
-    
-    //const {location} = useContext(GlobalStore);
 
     return(
         <View style={styles.body}>
@@ -53,8 +51,7 @@ const styles = StyleSheet.create({
     text:{
         ...HeaderTextLight,
         ...midRow,
-        height:'100%',
-        marginTop:20
+        height:'auto',
     },
     image:{
         ...midRow,
