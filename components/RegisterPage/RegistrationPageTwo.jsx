@@ -105,7 +105,6 @@ const RegistrationPageTwo = () =>{
                             <RouteButton path={"/registered"} text={"Register"} colour={colourScheme.Abstract}/>                        
                         </Col>
                     </Row>
-                    
                 </Col>
                 <Col size={1}></Col>
             </Row>
