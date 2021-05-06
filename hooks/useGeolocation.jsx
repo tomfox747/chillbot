@@ -40,8 +40,6 @@ const useGeoLocation = () =>{
         return () => clearInterval(interval);
     },[])
 
-    
-
     return location;
 }
 

@@ -10,8 +10,6 @@ import Header from '../Shared/Header'
 import RouteButton from '../Shared/RouteButton'
 import Textinput from '../Shared/TextInput'
 
-import GlobalStore from '../../data/GlobalStore';
-
 const LoginPage = ({registered}) =>{
     const rowSizes=[
         12,12,6,10,1,10,1,10,18,10,10
@@ -66,7 +64,9 @@ const LoginPage = ({registered}) =>{
                 </Col>
                 <Col size={1}></Col>
             </Row>
+            
             <Row size={rowSizes[8]}></Row>
+            
             <Row size={rowSizes[9]}>
                 <Col size={1}></Col>
                 <Col size={5} position={mid}>

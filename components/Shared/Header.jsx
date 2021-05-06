@@ -14,7 +14,7 @@ import LogoImage from '../../assets/images/Logo.png'
 
 const Header = ({BackButton, HeaderText}) =>{
     
-    const {location} = useContext(GlobalStore);
+    //const {location} = useContext(GlobalStore);
 
     return(
         <View style={styles.body}>
@@ -36,8 +36,7 @@ const Header = ({BackButton, HeaderText}) =>{
                 }
                 <Col size={1}></Col>
                 <Col size={20} position={midRow}>
-                    {/*<Text style={styles.text}>{HeaderText}</Text>*/}
-                    <Text style={styles.text}>Latitude - {location.latitude} Longitude - {location.longitude}</Text>
+                    <Text style={styles.text}>{HeaderText}</Text>
                 </Col>
                 <Col size={1}></Col>
             </Row>
