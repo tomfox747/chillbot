@@ -1,13 +1,21 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react'
 import { StyleSheet, Text, View } from 'react-native';
-import colourScheme from './assets/styling/colourScheme'
-import Router from './components/Routers/Router'
+import colourScheme from './assets/styling/colourScheme';
+import Router from './components/Routers/Router';
+
+import GlobalStore from './data/GlobalStore'
+import useGeolocation from './hooks/useGeolocation';
+
 
 const App = () => {
+  const location = useGeolocation();
+
   return (
     <View style={styles.container}>
-      <Router/>
+      <GlobalStore.Provider value={{location}}>
+        <Router/>
+      </GlobalStore.Provider>
       <StatusBar style="auto" />
     </View>
   );

@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import {View, Text, StyleSheet, Image} from 'react-native'
 import colourScheme from '../../assets/styling/colourScheme'
 import {HeaderTextLight} from '../../assets/styling/textStyles'
@@ -7,11 +7,15 @@ import {Link} from 'react-router-native'
 import Row from './Row'
 import Col from './Col'
 
+import GlobalStore from '../../data/GlobalStore';
+
 import BackImage from '../../assets/images/back.png'
 import LogoImage from '../../assets/images/Logo.png'
 
 const Header = ({BackButton, HeaderText}) =>{
     
+    const {location} = useContext(GlobalStore);
+
     return(
         <View style={styles.body}>
             <Row>
@@ -32,7 +36,8 @@ const Header = ({BackButton, HeaderText}) =>{
                 }
                 <Col size={1}></Col>
                 <Col size={20} position={midRow}>
-                    <Text style={styles.text}>{HeaderText}</Text>
+                    {/*<Text style={styles.text}>{HeaderText}</Text>*/}
+                    <Text style={styles.text}>Latitude - {location.latitude} Longitude - {location.longitude}</Text>
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -49,7 +54,8 @@ const styles = StyleSheet.create({
     text:{
         ...HeaderTextLight,
         ...midRow,
-        height:'100%'
+        height:'100%',
+        marginTop:20
     },
     image:{
         ...midRow,

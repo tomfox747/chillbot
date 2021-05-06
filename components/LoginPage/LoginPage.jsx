@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from 'react';
+import React,{useState, useEffect, useContext} from 'react';
 import {View, Text, StyleSheet} from 'react-native'
 
 import colourScheme from '../../assets/styling/colourScheme'
@@ -9,6 +9,8 @@ import Col from '../Shared/Col'
 import Header from '../Shared/Header'
 import RouteButton from '../Shared/RouteButton'
 import Textinput from '../Shared/TextInput'
+
+import GlobalStore from '../../data/GlobalStore';
 
 const LoginPage = ({registered}) =>{
     const rowSizes=[

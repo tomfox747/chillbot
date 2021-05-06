@@ -26,6 +26,7 @@ import CalmZonePage from '../CalmZonePage/CalmZonePage'
 import SettingsPage from '../Settings/SettingsPage'
 
 const LoginRouter = () =>{
+
     return (
         <View style={styles.body}>
             <NativeRouter>
