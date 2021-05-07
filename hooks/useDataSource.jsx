@@ -1,6 +1,5 @@
 import React,{useEffect,useState} from 'react'
 
-
 import * as firebase from 'firebase';
 import '@firebase/firestore';
 
@@ -30,18 +29,14 @@ const useDataSource = () =>{
         if(users.length === 0){
             return false
         }
-        return true
+        return users[0]
     }
 
     const _getAllFromCollection = async (collection) =>{
-        let userRef = await dbh.collection("users");
-        let user = await userRef.where('username', '==', 'tomfox747').get();
-        let output = []
-        user.forEach(doc => {
-            //output.push(doc);
-            console.log(doc.data())
-        })
-        return output
+        let responseRef = await dbh.collection(collection);
+        let response = await userRef.where('username', '==', 'tomfox747').get();
+        response = toDataArray(response)
+        return response
     }
 
     const toDataArray = (input) =>{
@@ -53,8 +48,8 @@ const useDataSource = () =>{
     }
 
     return({
-        _getAllFromCollection,
-        _authenticate
+        _authenticate,
+        _getAllFromCollection
     })
 }
 

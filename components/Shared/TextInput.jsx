@@ -3,7 +3,7 @@ import {View, Text, TextInput, StyleSheet} from 'react-native'
 
 import {mid} from '../../assets/styling/flexPositions'
 
-const Textinput = ({value, setValue, disabled}) =>{
+const Textinput = ({value, setValue, disabled, placeholder}) =>{
     const styles = StyleSheet.create({
         textInput:{
             height: 30, 
@@ -19,14 +19,15 @@ const Textinput = ({value, setValue, disabled}) =>{
             height:'100%'
         }
     })
-    
+
     return (
         <View style={styles.wrapper}>
             <TextInput
                 editable={!disabled}
                 style={styles.textInput}
-                onChange={(e) => setValue(e.target.value)}
+                onChangeText={setValue}
                 value={value}
+                placeholder={placeholder}
             />
         </View>
     )

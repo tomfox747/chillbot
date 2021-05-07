@@ -1,7 +1,8 @@
-import React,{useState, useEffect, useContext} from 'react';
+import React,{useState, useEffect, useContext} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import {useHistory} from 'react-router-native'
 import useDataSource from '../../hooks/useDataSource'
+import {LoggedInUserStore} from '../../data/GlobalStore'
 
 import colourScheme from '../../assets/styling/colourScheme'
 import {bottomLeft, mid, midLeft} from '../../assets/styling/flexPositions'
@@ -11,7 +12,6 @@ import Col from '../Shared/Col'
 import Header from '../Shared/Header'
 import RouteButton from '../Shared/RouteButton'
 import Textinput from '../Shared/TextInput'
-import FunctionButton from '../Shared/FunctionButton';
 
 const LoginPage = ({registered}) =>{
     let history = useHistory();
@@ -25,8 +25,9 @@ const LoginPage = ({registered}) =>{
     ]
     if(rowSizes.reduce((a,b) => a + b,0) !== 100){alert("grid error, row sizes = " + rowSizes.reduce((a,b) => a + b,0))}
     
-    const [usernameValue, setUsernameValue] = useState("Email");
-    const [passwordValue, setPasswordValue] = useState("Password");
+    const [usernameValue, setUsernameValue] = useState("");
+    const [passwordValue, setPasswordValue] = useState("");
+    let {loggedInUser, setLoggedInUser} = useContext(LoggedInUserStore);
 
     useEffect(() =>{
         if(registered){
@@ -35,7 +36,9 @@ const LoginPage = ({registered}) =>{
     },[registered])
 
     const authenticate = async () =>{
-        if(await _authenticate(usernameValue, passwordValue)){
+        let authResult = await _authenticate(usernameValue, passwordValue)
+        if(authResult !== false){
+            setLoggedInUser(authResult)
             history.push('/home');
         }else{
             alert("Incorrect username or password")
@@ -60,7 +63,7 @@ const LoginPage = ({registered}) =>{
             <Row size={rowSizes[3]}>
                 <Col size={1}></Col>
                 <Col size={5} position={mid}>
-                    <Textinput value={usernameValue} setValue={setUsernameValue}/>
+                    <Textinput value={usernameValue} setValue={setUsernameValue} placeholder={"Username"}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -68,7 +71,7 @@ const LoginPage = ({registered}) =>{
             <Row size={rowSizes[5]}>
                 <Col size={1}></Col>
                 <Col size={5} position={mid}>
-                    <Textinput value={passwordValue} setValue={setPasswordValue}/>
+                    <Textinput value={passwordValue} setValue={setPasswordValue} placeholder={"Password"}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>

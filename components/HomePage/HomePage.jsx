@@ -1,6 +1,7 @@
-import React,{useState} from 'react'
+import React,{useState, useContext} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import colourScheme from '../../assets/styling/colourScheme'
+import {LoggedInUserStore,LocationStore} from '../../data/GlobalStore'
 
 import Row from '../Shared/Row'
 import Col from '../Shared/Col'
@@ -8,7 +9,8 @@ import Header from '../Shared/Header'
 import RouteButton from '../Shared/RouteButton'
 
 const HomePage = () =>{
-    const [nickname, setNickname] = useState("NickName")
+    let {loggedInUser, setLoggedInUser} = useContext(LoggedInUserStore)
+
     const rowSizes = [
         12,3,6,5,11,3,11,3,11,35
     ]
@@ -18,7 +20,7 @@ const HomePage = () =>{
         <View style={styles.body}>
             <Row size={rowSizes[0]}>
                 <Col>
-                    <Header HeaderText={`Welcome back ${nickname}`}/>
+                    <Header HeaderText={`Welcome back ${loggedInUser.nickname}`}/>
                 </Col>
             </Row>
             <Row size={rowSizes[1]}></Row>
