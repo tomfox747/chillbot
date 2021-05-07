@@ -26,7 +26,7 @@ const DropDown = ({options, setSelected, selected}) =>{
             <TouchableOpacity onPress={() => setExpanded(!expanded)} style={styles.container}>
                 <Row>
                     <Col size={7} position={flex.mid}>
-                        <Text>{selected}</Text>
+                        <Text style={styles.text}>{selected}</Text>
                     </Col>
                     <Col size={3} position={flex.mid}>
                         <Image source={Arrow} style={styles.img}/>
@@ -35,16 +35,18 @@ const DropDown = ({options, setSelected, selected}) =>{
             </TouchableOpacity>
             {expanded === true &&
                 <Overlay isVisible={true} onBackdropPress={() => setExpanded(false)} style={styles.overlay}>
-                    <Text>Select a Filter</Text>
-                    {
-                        options.map((element,index) =>{
-                            return(
-                                <TouchableOpacity onPress={(e) => handleSelection(element)} style={styles.dropdown}>
-                                    <Text style={styles.text}>{element}</Text>
-                                </TouchableOpacity>
-                            )
-                        })
-                    }
+                    <View>
+                        <Text>Select a Filter</Text>
+                        {
+                            options.map((element,index) =>{
+                                return(
+                                    <TouchableOpacity key={element+index} onPress={(e) => handleSelection(element)} style={styles.dropdown}>
+                                        <Text style={styles.text}>{element}</Text>
+                                    </TouchableOpacity>
+                                )
+                            })
+                        }
+                    </View>
                 </Overlay>
             }
         </View>
