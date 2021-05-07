@@ -25,11 +25,12 @@ const useDataSource = () =>{
     
     const _authenticate = async (username, password) =>{
         let userRef = await dbh.collection("users")
-        let users = await userRef/*.where('username', '==', username)*/.get()
-        //users = users.filter(user => user.password === password)
-        users.forEach(doc => {
-            console.log(doc)
-        })
+        let users = toDataArray(await userRef.where('username', '==', username).get())
+        users = users.filter(user => user.password === password)
+        if(users.length === 0){
+            return false
+        }
+        return true
     }
 
     const _getAllFromCollection = async (collection) =>{
@@ -38,7 +39,15 @@ const useDataSource = () =>{
         let output = []
         user.forEach(doc => {
             //output.push(doc);
-            console.log(doc)
+            console.log(doc.data())
+        })
+        return output
+    }
+
+    const toDataArray = (input) =>{
+        let output = []
+        input.forEach(doc =>{
+            output.push(doc.data())
         })
         return output
     }

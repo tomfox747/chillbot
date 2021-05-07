@@ -35,12 +35,11 @@ const LoginPage = ({registered}) =>{
     },[registered])
 
     const authenticate = async () =>{
-        /*if(await _authenticate(usernameValue, passwordValue)){
+        if(await _authenticate(usernameValue, passwordValue)){
             history.push('/home');
         }else{
             alert("Incorrect username or password")
-        }*/
-        await _getAllFromCollection("")
+        }
     }
 
     return (
