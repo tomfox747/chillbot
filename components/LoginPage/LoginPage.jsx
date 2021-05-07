@@ -1,5 +1,7 @@
 import React,{useState, useEffect, useContext} from 'react';
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import {useHistory} from 'react-router-native'
+import useDataSource from '../../hooks/useDataSource'
 
 import colourScheme from '../../assets/styling/colourScheme'
 import {bottomLeft, mid, midLeft} from '../../assets/styling/flexPositions'
@@ -9,14 +11,21 @@ import Col from '../Shared/Col'
 import Header from '../Shared/Header'
 import RouteButton from '../Shared/RouteButton'
 import Textinput from '../Shared/TextInput'
+import FunctionButton from '../Shared/FunctionButton';
 
 const LoginPage = ({registered}) =>{
+    let history = useHistory();
+    let {
+        _authenticate,
+        _getAllFromCollection
+    }= useDataSource()
+
     const rowSizes=[
         12,12,6,10,1,10,1,10,18,10,10
     ]
     if(rowSizes.reduce((a,b) => a + b,0) !== 100){alert("grid error, row sizes = " + rowSizes.reduce((a,b) => a + b,0))}
     
-    const [emailValue, setEmailValue] = useState("Email");
+    const [usernameValue, setUsernameValue] = useState("Email");
     const [passwordValue, setPasswordValue] = useState("Password");
 
     useEffect(() =>{
@@ -24,6 +33,15 @@ const LoginPage = ({registered}) =>{
             alert("Registration Successful")
         }
     },[registered])
+
+    const authenticate = async () =>{
+        /*if(await _authenticate(usernameValue, passwordValue)){
+            history.push('/home');
+        }else{
+            alert("Incorrect username or password")
+        }*/
+        await _getAllFromCollection("")
+    }
 
     return (
         <View style={styles.body}>
@@ -43,7 +61,7 @@ const LoginPage = ({registered}) =>{
             <Row size={rowSizes[3]}>
                 <Col size={1}></Col>
                 <Col size={5} position={mid}>
-                    <Textinput value={emailValue} setValue={setEmailValue}/>
+                    <Textinput value={usernameValue} setValue={setUsernameValue}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -60,7 +78,9 @@ const LoginPage = ({registered}) =>{
             <Row size={rowSizes[7]}>
                 <Col size={1}></Col>
                 <Col size={5} position={mid}>
-                    <RouteButton path={"/home"} text={"Login"} colour={colourScheme.LightTone}/>
+                    <TouchableOpacity onPress={() => authenticate()} style={styles.loginButton}>
+                        <Text style={{color:'white'}}>Login</Text>
+                    </TouchableOpacity>
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -82,6 +102,13 @@ const LoginPage = ({registered}) =>{
 const styles= StyleSheet.create({
     body:{
         height:'100%'
+    },
+    loginButton:{
+        height:'100%',
+        width:'100%',
+        backgroundColor:colourScheme.LightTone,
+        ...mid,
+        borderRadius:5
     }
 })
 

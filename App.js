@@ -1,12 +1,11 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View } from 'react-native';
 import colourScheme from './assets/styling/colourScheme';
 import Router from './components/Routers/Router';
 
 import {LocationStore} from './data/GlobalStore'
 import useGeolocation from './hooks/useGeolocation';
-
 
 const App = () => {
   const location = useGeolocation();

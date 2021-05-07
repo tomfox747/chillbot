@@ -39,7 +39,7 @@ const entries = [
 const DiaryPage = ({entryAdded}) =>{
 
     const rowSizes = [
-        12,2,7,7,7,1,17,9,33,4
+        12,2,7,7,7,1,17,9,34,4
     ]
     if(rowSizes.reduce((a,b) => a + b) !== 100){console.log("grid error, row sizes = " + rowSizes.reduce((a,b) => a + b))}
 

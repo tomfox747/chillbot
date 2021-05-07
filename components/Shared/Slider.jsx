@@ -3,7 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
 import {topMidRow, midLeft} from '../../assets/styling/flexPositions' 
 import colourScheme from '../../assets/styling/colourScheme'
 
-selectorOptions =[1,2,3,4,5,6,7,8,9,10]
+const selectorOptions =[1,2,3,4,5,6,7,8,9,10]
 
 const Selector = () =>{
     const [selected, setSelected] = useState(null)
