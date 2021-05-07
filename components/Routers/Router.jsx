@@ -32,9 +32,7 @@ const LoginRouter = () =>{
             <NativeRouter>
                 
                 <Route exact path="/" component={LoginPage}/>
-                <Route path="/registered" component={() =>{
-                    return <LoginPage registered={true}/>
-                }}/>
+                
                 <Route path="/registerPage1" component={RegistrationPageOne}/>
                 <Route path="/registerPage2" component={RegistrationPageTwo}/>
 

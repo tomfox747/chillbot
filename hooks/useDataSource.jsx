@@ -39,6 +39,17 @@ const useDataSource = () =>{
         return response
     }
 
+    const _createDocument = async (collection, object) =>{
+        return await dbh.collection(collection).add(object)
+        .then(() => {
+            return true
+        })
+        .catch((error) => {
+            alert(error)
+            return false
+        });
+    }
+
     const toDataArray = (input) =>{
         let output = []
         input.forEach(doc =>{
@@ -49,7 +60,8 @@ const useDataSource = () =>{
 
     return({
         _authenticate,
-        _getAllFromCollection
+        _getAllFromCollection,
+        _createDocument,
     })
 }
 

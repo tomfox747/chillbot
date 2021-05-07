@@ -13,7 +13,7 @@ import Header from '../Shared/Header'
 import RouteButton from '../Shared/RouteButton'
 import Textinput from '../Shared/TextInput'
 
-const LoginPage = ({registered}) =>{
+const LoginPage = () =>{
     let history = useHistory();
     let {
         _authenticate,
@@ -28,12 +28,6 @@ const LoginPage = ({registered}) =>{
     const [usernameValue, setUsernameValue] = useState("");
     const [passwordValue, setPasswordValue] = useState("");
     let {loggedInUser, setLoggedInUser} = useContext(LoggedInUserStore);
-
-    useEffect(() =>{
-        if(registered){
-            alert("Registration Successful")
-        }
-    },[registered])
 
     const authenticate = async () =>{
         let authResult = await _authenticate(usernameValue, passwordValue)

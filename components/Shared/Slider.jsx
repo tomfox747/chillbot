@@ -5,9 +5,8 @@ import colourScheme from '../../assets/styling/colourScheme'
 
 const selectorOptions =[1,2,3,4,5,6,7,8,9,10]
 
-const Selector = () =>{
-    const [selected, setSelected] = useState(null)
-
+const Selector = ({selected, setSelected}) =>{
+    
     const generateKey = (pre) => {
         return `${ pre }_${ new Date().getTime() }`;
     }

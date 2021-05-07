@@ -1,5 +1,6 @@
-import React,{useState} from 'react'
+import React,{useState, useContext} from 'react'
 import {View,Text, StyleSheet} from 'react-native'
+import {useHistory} from 'react-router-native'
 import colourScheme from '../../assets/styling/colourScheme'
 import {midLeft} from '../../assets/styling/flexPositions'
 import Row from '../Shared/Row'
@@ -7,17 +8,34 @@ import Col from '../Shared/Col'
 import RouteButton from '../Shared/RouteButton'
 import Header from '../Shared/Header'
 import TextInput from '../Shared/TextInput'
+import {RegistrationStore} from '../../data/GlobalStore'
+import FunctionButton from '../Shared/FunctionButton'
 
 const RegistrationPageOne = () =>{
+    const history = useHistory();
     const rowSizes = [
-        12,6,4,10,1,10,10,4,10,1,10,8,7,7
+        12,6,4,11,2,11,11,5,11,2,9,8,8
     ]
     if(rowSizes.reduce((a,b) => a + b,0) !== 100){alert("grid error, row sizes = " + rowSizes.reduce((a,b) => a + b,0))}
 
-    const [email, setEmail] = useState('Email')
-    const [name, setName] = useState('Nick Name')
-    const [password, setPassword] = useState('Password')
-    const [confirmPassword, setConfirmPassword] = useState('Confirm Password')
+    const [username, setUsername] = useState('')
+    const [nickname, setNickname] = useState('')
+    const [password, setPassword] = useState('')
+    let {newUser, setNewUser} = useContext(RegistrationStore)
+
+    const next = () =>{
+        if(username === '' || nickname === '' || password === ''){
+            alert("Please fill in all required sections")
+            return
+        }
+        setNewUser({
+            ...newUser,
+            username:username,
+            nickname:nickname,
+            password:password
+        })
+        history.push('/registerPage2')
+    }
 
     return(
         <View style={styles.body}>
@@ -37,7 +55,7 @@ const RegistrationPageOne = () =>{
             <Row size={rowSizes[3]}>
                 <Col size={1}></Col>
                 <Col size={5}>
-                    <TextInput value={email} setValue={setEmail}/>
+                    <TextInput value={username} setValue={setUsername} placeholder={"Username"}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -45,7 +63,7 @@ const RegistrationPageOne = () =>{
             <Row size={rowSizes[5]}>
                 <Col size={1}></Col>
                 <Col size={5}>
-                    <TextInput value={name} setValue={setName}/>
+                    <TextInput value={nickname} setValue={setNickname} placeholder={"Nick Name"}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -60,18 +78,11 @@ const RegistrationPageOne = () =>{
             <Row size={rowSizes[8]}>
                 <Col size={1}></Col>
                 <Col size={5}>
-                    <TextInput value={password} setValue={setPassword}/>
+                    <TextInput value={password} setValue={setPassword} placeholder={"Password"}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
             <Row size={rowSizes[9]}></Row>
-            <Row size={rowSizes[10]}>
-                <Col size={1}></Col>
-                <Col size={5}>
-                    <TextInput value={confirmPassword} setValue={setConfirmPassword}/>
-                </Col>
-                <Col size={1}></Col>
-            </Row>
             <Row size={rowSizes[11]}></Row>
             <Row size={rowSizes[12]}>
                 <Col size={1}></Col>
@@ -82,7 +93,7 @@ const RegistrationPageOne = () =>{
                         </Col>
                         <Col size={1}></Col>
                         <Col size={15}>
-                            <RouteButton path={"/registerPage2"} text={"Next"} colour={colourScheme.Abstract}/>
+                            <FunctionButton funct={next} text={"Next"} color={colourScheme.Abstract}/>
                         </Col>
                     </Row>
                 </Col>

@@ -3,11 +3,11 @@ import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 import colourScheme from '../../assets/styling/colourScheme'
 import {midRow,mid} from '../../assets/styling/flexPositions'
 
-const FunctionButton = ({value, funct, text}) =>{
+const FunctionButton = ({value, funct, text, color}) =>{
 
     return(
         <View style={styles.body}>
-            <TouchableOpacity  onPress={(e) => funct(value)} style={styles.button}>
+            <TouchableOpacity  onPress={(e) => funct(value)} style={{...styles.button, backgroundColor: color ? color : colourScheme.LightTone}}>
                 <Text style={styles.text}>{text}</Text>
             </TouchableOpacity>
         </View>
