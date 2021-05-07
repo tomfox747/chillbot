@@ -32,7 +32,7 @@ const LoginRouter = () =>{
             <NativeRouter>
                 
                 <Route exact path="/" component={LoginPage}/>
-                
+
                 <Route path="/registerPage1" component={RegistrationPageOne}/>
                 <Route path="/registerPage2" component={RegistrationPageTwo}/>
 
@@ -45,9 +45,6 @@ const LoginRouter = () =>{
                 <Route path="/diaryEntryForm1"component={DiaryEntryForm1}/>
                 <Route path="/diaryEntryForm2"component={DiaryEntryForm2}/>
                 <Route path="/diaryEntryForm3"component={DiaryEntryForm3}/>
-                <Route path="/diaryEntrySubmitted" component={() =>{
-                    return <DiaryPage entryAdded={true}/>
-                }}/>
                 <Route path="/viewEntryPage"component={ViewEntriesPage}/>
 
 
