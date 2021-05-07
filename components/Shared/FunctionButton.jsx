@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, TouchableOpacity, Text, StyleSheet} from 'react-native'
 import colourScheme from '../../assets/styling/colourScheme'
-import {midRow} from '../../assets/styling/flexPositions'
+import {midRow,mid} from '../../assets/styling/flexPositions'
 
 const FunctionButton = ({value, funct, text}) =>{
 
@@ -22,11 +22,10 @@ const styles=StyleSheet.create({
         height:'100%',
         width:"100%",
         backgroundColor: colourScheme.LightTone,
-        borderRadius:5
+        borderRadius:5,
+        ...mid
     },
-    text:{
-        ...midRow, 
-        height:'100%', 
+    text:{ 
         textAlign:'center',
         color:'white'
     }

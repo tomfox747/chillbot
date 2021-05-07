@@ -9,7 +9,8 @@ const ScrollableList = ({type, list}) =>{
                     return(
                         React.createElement(
                             type,
-                            {props: element.props }
+                            {props: element.props },
+                            {key:"Entry"+index}
                         )
                     )
                 })
