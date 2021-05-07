@@ -11,8 +11,10 @@ import Dropdown from '../Shared/DropDown'
 import ScrollableList from '../Shared/ScollableList'
 import DiaryEntryListItem from '../Shared/DiaryEntryListItem'
 import Slider from '../Shared/Slider'
-import { Overlay } from 'react-native-elements'
+import TextInput from '../Shared/TextInput'
 import DropDown from '../Shared/DropDown'
+import FunctionButton from '../Shared/FunctionButton'
+
 
 const testOptions = ["Date","Mood","Location","People","Sleep"];
 const testLocations = ["Home","Gym","Work","Shopping","Restaurant"]
@@ -155,7 +157,7 @@ const FilterComponent = ({type, selectedPerson, setSelectedPerson, selectedLocat
 const MoodFilter = () =>{
 
     return(
-        <View>
+        <View style={styles.body}>
             <Text>Select your mood rating:</Text>
             <Slider/>
         </View>
@@ -165,7 +167,7 @@ const MoodFilter = () =>{
 const SleepFilter = () =>{
 
     return(
-        <View>
+        <View style={styles.body}>
             <Text>Select your sleep rating:</Text>
             <Slider/>            
         </View>
@@ -208,11 +210,46 @@ const LocationFilter = ({selectedLocation, setSelectedLocation}) =>{
     )
 }
 
-const DateFilter = () =>{
-
+const DateFilter = ({setDateFilter}) =>{
+    const [day, setDay] = useState("")
+    const [month, setMonth] = useState("")
+    const [year, setYear] = useState("")
     return(
-        <View>
-            
+        <View style={{...styles.body}}>
+            <Row size={10}>
+                <Col size={3} position={flex.mid}>
+                    <Text>Day</Text>
+                </Col>
+                <Col size={1}></Col>
+                <Col size={3} position={flex.mid}>
+                    <Text>Month</Text>
+                </Col>
+                <Col size={1}></Col>
+                <Col size={3} position={flex.mid}>
+                    <Text>Year</Text>
+                </Col>
+            </Row>
+            <Row size={10}>
+                <Col size={3}>
+                    <TextInput value={day} setValue={setDay}/>
+                </Col>
+                <Col size={1}></Col>
+                <Col size={3}>
+                    <TextInput value={month} setValue={setMonth}/>
+                </Col>
+                <Col size={1}></Col>
+                <Col size={3}>
+                    <TextInput value={year} setValue={setYear}/>
+                </Col>
+            </Row>
+            <Row size={2}></Row>
+            <Row size={10}>
+                <Col>
+                    <View>
+                        <FunctionButton value={day+"/"+month+"/"+year} funct={setDateFilter} text={"Set Date"}/>
+                    </View>
+                </Col>
+            </Row>
         </View>
     )
 }
