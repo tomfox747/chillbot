@@ -1,4 +1,4 @@
-export const HeaderTextLight ={
+export const HeaderTextLight = {
     fontSize:20,
     color:'#FFFFFF'
 } 

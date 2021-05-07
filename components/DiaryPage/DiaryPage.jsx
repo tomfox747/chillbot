@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import colourScheme from '../../assets/styling/colourScheme'
+import * as flex from '../../assets/styling/flexPositions'
 import RouteButton from '../Shared/RouteButton'
 
 import Header from '../Shared/Header'
@@ -13,7 +14,7 @@ const testOptions = ["option 1","option 2","option 3"];
 const DiaryPage = ({entryAdded}) =>{
 
     const rowSizes = [
-        12,3,9,5,9
+        12,3,9,5,9,62
     ]
     if(rowSizes.reduce((a,b) => a + b) !== 100){console.log("grid error, row sizes = " + rowSizes.reduce((a,b) => a + b))}
 
@@ -44,7 +45,7 @@ const DiaryPage = ({entryAdded}) =>{
 
             <Row size={rowSizes[4]}>
                 <Col size={1}></Col>
-                <Col size={3}>
+                <Col size={3} style={flex.mid}>
                     <Text>Filter by :</Text>
                 </Col>
                 <Col size={7}>
@@ -52,7 +53,9 @@ const DiaryPage = ({entryAdded}) =>{
                 </Col>
                 <Col size={1}></Col>
             </Row>
+            <Row size={rowSizes[5]}>
 
+            </Row>
             {
                 /*<RouteButton path={"/diaryEntryForm1"} text={"New Diary Entry"} colour={colourScheme.LightTone}/>
                 <RouteButton path={"/viewEntriesPage"} text={"View Diary Entries"} colour={colourScheme.LightTone}/>*/
