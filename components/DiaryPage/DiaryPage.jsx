@@ -39,7 +39,7 @@ const entries = [
 const DiaryPage = ({entryAdded}) =>{
 
     const rowSizes = [
-        12,4,10,4,7,4,17,4,33,4
+        12,2,7,7,7,1,17,9,33,4
     ]
     if(rowSizes.reduce((a,b) => a + b) !== 100){console.log("grid error, row sizes = " + rowSizes.reduce((a,b) => a + b))}
 
@@ -86,7 +86,7 @@ const DiaryPage = ({entryAdded}) =>{
             <Row size={rowSizes[5]}></Row>
             <Row size={rowSizes[6]}>
                 <Col size={1}></Col>
-                <Col size={10}>
+                <Col size={10} position={flex.mid}>
                     <FilterComponent 
                         type={selected} 
                         selectedPerson={selectedPerson}
@@ -157,7 +157,7 @@ const FilterComponent = ({type, selectedPerson, setSelectedPerson, selectedLocat
 const MoodFilter = () =>{
 
     return(
-        <View style={styles.body}>
+        <View style={{...styles.body,...flex.midLeft}}>
             <Text>Select your mood rating:</Text>
             <Slider/>
         </View>
@@ -167,7 +167,7 @@ const MoodFilter = () =>{
 const SleepFilter = () =>{
 
     return(
-        <View style={styles.body}>
+        <View style={{...styles.body,...flex.midLeft}}>
             <Text>Select your sleep rating:</Text>
             <Slider/>            
         </View>
@@ -177,9 +177,9 @@ const SleepFilter = () =>{
 const PeopleFilter = ({selectedPerson, setSelectedPerson}) =>{
 
     return(
-        <View style={styles.body}>
+        <View style={{...styles.body,...flex.mid}}>
             <Row>
-                <Col>
+                <Col position={flex.midLeft}>
                     <Text>Select the filter by person:</Text>
                 </Col>
             </Row>
@@ -195,9 +195,9 @@ const PeopleFilter = ({selectedPerson, setSelectedPerson}) =>{
 const LocationFilter = ({selectedLocation, setSelectedLocation}) =>{
 
     return(
-        <View style={styles.body}>
+        <View style={{...styles.body,...flex.mid}}>
             <Row>
-                <Col>
+                <Col position={flex.midLeft}>
                     <Text>Select the filter location:</Text>    
                 </Col>
             </Row>
@@ -215,7 +215,7 @@ const DateFilter = ({setDateFilter}) =>{
     const [month, setMonth] = useState("")
     const [year, setYear] = useState("")
     return(
-        <View style={{...styles.body}}>
+        <View style={{...styles.body,...flex.mid}}>
             <Row size={10}>
                 <Col size={3} position={flex.mid}>
                     <Text>Day</Text>
@@ -253,6 +253,5 @@ const DateFilter = ({setDateFilter}) =>{
         </View>
     )
 }
-
 
 export default DiaryPage
