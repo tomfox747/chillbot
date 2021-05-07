@@ -13,7 +13,7 @@ import DailyEntryForm from '../DiaryPage/DailyEntryForm'
 import DiaryEntryForm1 from '../DiaryPage/DiaryEntryForm1'
 import DiaryEntryForm2 from '../DiaryPage/DiaryEntryForm2'
 import DiaryEntryForm3 from '../DiaryPage/DiaryEntryForm3'
-import ViewEntriesPage from '../DiaryPage/ViewEntriesPage'
+import ViewEntriesPage from '../DiaryPage/ViewEntryPage'
 
 import NeedAChatPage from '../NeedAChatPage/NeedAChagePage'
 import HelpSomeoneOutPage from '../HelpSomeoneOutPage/HelpSomeoneOutPage'
@@ -50,7 +50,7 @@ const LoginRouter = () =>{
                 <Route path="/diaryEntrySubmitted" component={() =>{
                     return <DiaryPage entryAdded={true}/>
                 }}/>
-                <Route path="/viewEntriesPage"component={ViewEntriesPage}/>
+                <Route path="/viewEntryPage"component={ViewEntriesPage}/>
 
 
                 <Route path="/needAChatPage"component={NeedAChatPage}/>
