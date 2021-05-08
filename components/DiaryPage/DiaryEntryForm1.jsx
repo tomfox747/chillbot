@@ -1,7 +1,8 @@
-import React,{useState} from 'react'
+import React,{useState, useContext} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
-import {Redirect} from 'react-router-native'
+import {useHistory} from 'react-router-native'
 import colourScheme from '../../assets/styling/colourScheme'
+import {NewDiaryEntryStore} from '../../data/GlobalStore'
 
 import Row from '../Shared/Row'
 import Col from '../Shared/Col'
@@ -9,19 +10,27 @@ import Header from '../Shared/Header'
 import TextInput from '../Shared/TextInput'
 import RouteButton from '../Shared/RouteButton'
 import Slider from '../Shared/Slider'
+import FunctionButton from '../Shared/FunctionButton'
 
 const DiaryEntryForm1 = () =>{
+    const history = useHistory() 
+    let {newDiaryEntry, setNewDiaryEntry} = useContext(NewDiaryEntryStore)
+
     const rowSizes = [
         12,8,5,10,2,5,30,10,10,8
     ]
     if(rowSizes.reduce((a,b) => a + b) !== 100){console.log(rowSizes.reduce((a,b) => a + b))}
 
-    const [dailyComplete, setDailyComplete] = useState(true)
-    const [stateOfMind, setStateOfMind] = useState(0)
+    const [stateOfMind, setStateOfMind] = useState(null)
     const [moodDescription, setMoodDescription] = useState("")
 
-    if(!dailyComplete){
-        return <Redirect to={"/dailyEntryForm"}/>
+    const next = () =>{
+        setNewDiaryEntry({
+            ...newDiaryEntry,
+            stateOfMind:stateOfMind,
+            moodDescription:moodDescription
+        })
+        history.push('/diaryEntryForm2')
     }
 
     return(
@@ -44,7 +53,7 @@ const DiaryEntryForm1 = () =>{
             <Row size={rowSizes[3]}>
                 <Col size={1}></Col>
                 <Col size={5}>
-                    <Slider setValue={setStateOfMind}/>
+                    <Slider selected={stateOfMind} setSelected={setStateOfMind}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -75,7 +84,7 @@ const DiaryEntryForm1 = () =>{
                         </Col>
                         <Col size={1}></Col>
                         <Col size={12}>
-                            <RouteButton path={"/diaryEntryForm2"} text={"Next"} colour={colourScheme.Abstract}/>
+                            <FunctionButton funct={next} text={"Next"} color={colourScheme.Abstract}/>
                         </Col>
                     </Row>
                 </Col>

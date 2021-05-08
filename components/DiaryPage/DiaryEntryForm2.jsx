@@ -1,5 +1,7 @@
-import React,{useState} from 'react'
+import React,{useState, useContext} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
+import {useHistory} from 'react-router-native'
+import {NewDiaryEntryStore} from '../../data/GlobalStore'
 import colourScheme from '../../assets/styling/colourScheme'
 
 import Header from '../Shared/Header'
@@ -8,26 +10,55 @@ import Row from '../Shared/Row'
 import FunctionButton from '../Shared/FunctionButton'
 import RouteButton from '../Shared/RouteButton'
 import TextInput from '../Shared/TextInput'
+import SelectMultiple from '../Shared/SelectMultiple'
+
+const actsStore = [
+    "Nothing Much",
+    "Working",
+    "Doing Chores",
+    "Chillin Alone",
+    "Socialising",
+    "Listening To Music",
+    "Watching TV",
+    "Watching Youtube",
+    "Playing Games",
+    "On Your Phone",
+    "Exercising",
+    "Other",
+]
 
 const DiaryEntryForm2 = () =>{
+    const history = useHistory()
+    let {newDiaryEntry, setNewDiaryEntry} = useContext(NewDiaryEntryStore)
     const rowSizes = [
         12,5,5,8,10,5,30,10,8,7
     ]
     if (rowSizes.reduce((a,b) => a + b) !== 100){console.log(rowSizes.reduce((a,b) => a + b))}
 
     const [location, setLocation] = useState(null)
-    const [activity, setActivity] = useState(null)
+    const [activities, setActivities] = useState([])
 
     const getLocation = (loc) =>{
         setLocation(loc)
     }
 
-    const setActivityFunc = (act) =>{
-        setActivity(act)
+    const setActivitiesFunc = (act) =>{
+        if(activities.includes(act)){
+            //remove the item from the array
+            setActivities(activities.filter(activity => activity !== act));
+        }
+
+        if(!activities.includes(act)){
+            //add the item to the array
+            setActivities([...activities, act]);
+        }
     }
 
-    console.log(location)
-    console.log(activity)
+    const next = () =>{
+        setNewDiaryEntry({
+            ...newDiaryEntry
+        })
+    }
 
     return(
         <View style={styles.body}>
@@ -59,7 +90,28 @@ const DiaryEntryForm2 = () =>{
                 </Col>
                 <Col size={1}></Col>
             </Row>
-            <ActivityComponent size={rowSizes[6]} funct={setActivityFunc}/>
+            <Row size={rowSizes[6]}>
+                <Col size={1}></Col>
+                <Col size={20}>
+                    <Row>
+                        <Col>
+                            <SelectMultiple selected={activities} setSelected={setActivitiesFunc} options={actsStore}/>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col>
+                            <Text>Selected: {
+                                activities.map((element,index) =>{
+                                    return(
+                                        {element} + " : "
+                                    )
+                                })    
+                            }</Text>
+                        </Col>
+                    </Row>
+                </Col>
+                <Col size={1}></Col>
+            </Row>
             <Row size={rowSizes[7]}></Row>
             <Row size={rowSizes[8]}>
                 <Col size={1}></Col>
@@ -86,47 +138,5 @@ const styles= StyleSheet.create({
         height:'100%'
     }
 })
-
-const ActivityComponent = ({size, funct}) =>{
-    return(
-        <Row size={size}>
-            <Col size={1}></Col>
-            <Col size={20}>
-                <Row size={20}>
-                    <Col size={20}><FunctionButton text={"Nothing Much"} value={"Nothing Much"} funct={funct}/></Col>
-                    <Col size={1}></Col>
-                    <Col size={20}><FunctionButton text={"Working"} value={"Working"} funct={funct}/></Col>
-                    <Col size={1}></Col>
-                    <Col size={20}><FunctionButton text={"Doing Chores"} value={"Doing Chores"} funct={funct}/></Col>
-                </Row>
-                <Row size={2}></Row>
-                <Row size={20}>
-                    <Col size={20}><FunctionButton text={"Chillin Alone"} value={"Chilling Alone"} funct={funct}/></Col>
-                    <Col size={1}></Col>
-                    <Col size={20}><FunctionButton text={"Socialising"} value={"Socialising"} funct={funct}/></Col>
-                    <Col size={1}></Col>
-                    <Col size={20}><FunctionButton text={"Listening to Music"} value={"Listening to Music"} funct={funct}/></Col>
-                </Row>
-                <Row size={2}></Row>
-                <Row size={20}>
-                    <Col size={20}><FunctionButton text={"Watching TV"} value={"Watching TV"} funct={funct}/></Col>
-                    <Col size={1}></Col>
-                    <Col size={20}><FunctionButton text={"Watching Youtube"} value={"Watching Youtube"} funct={funct}/></Col>
-                    <Col size={1}></Col>
-                    <Col size={20}><FunctionButton text={"Playing Games"} value={"Playing Games"} funct={funct}/></Col>
-                </Row>
-                <Row size={2}></Row>
-                <Row size={20}>
-                    <Col size={20}><FunctionButton text={"On Your Phone"} value={"On Your Phone"} funct={funct}/></Col>
-                    <Col size={1}></Col>
-                    <Col size={20}><FunctionButton text={"Exercising"} value={"Exercising"} funct={funct}/></Col>
-                    <Col size={1}></Col>
-                    <Col size={20}><FunctionButton text={"Other"} value={"Other"} funct={funct}/></Col>
-                </Row>
-            </Col>
-            <Col size={1}></Col>
-        </Row> 
-    )
-}
 
 export default DiaryEntryForm2
