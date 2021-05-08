@@ -47,16 +47,16 @@ const styles = StyleSheet.create({
         justifyContent:'space-between'
     },
     button:{
-        width:15,
-        height:15,
+        width:20,
+        height:20,
         backgroundColor:colourScheme.LightTone,
-        borderRadius:15
+        borderRadius:20
     },
     buttonSelected:{
-        width:15,
-        height:15,
+        width:20,
+        height:20,
         backgroundColor:colourScheme.Abstract,
-        borderRadius:15
+        borderRadius:20
     }
 })
 

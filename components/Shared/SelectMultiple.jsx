@@ -54,14 +54,10 @@ const SelectMultiple = ({options, setSelected, selected}) =>{
                                         return(
                                             <TouchableOpacity key={element+index} onPress={(e) => handleSelection(element)} style={styles.dropdown}>
                                                 <Row>
-                                                    {selected.includes(element)
-                                                        ?(
-                                                            <Col size={2} position={flex.mid}>
-                                                                <Image source={CheckBox} style={{width:30, height:30}}/>
-                                                            </Col>
-                                                        ):(
-                                                            <Col size={2}></Col>
-                                                        )
+                                                    {selected.includes(element) &&
+                                                        <Col size={2} position={flex.mid}>
+                                                            <Image source={CheckBox} style={{width:30, height:30}}/>
+                                                        </Col>
                                                     }
                                                     <Col size={8} position={flex.mid}>
                                                         <Text style={styles.text}>{element}</Text>
@@ -78,7 +74,9 @@ const SelectMultiple = ({options, setSelected, selected}) =>{
                     <Row size={1}></Row>
                     <Row size={2}>
                         <Col position={flex.mid}>
-                            <FunctionButton value={false} funct={setExpanded} text={"Close"} color={colourScheme.Abstract}/>
+                            <View style={{width:200}}>
+                                <FunctionButton value={false} funct={setExpanded} text={"Close"} color={colourScheme.Abstract}/>
+                            </View>
                         </Col>
                     </Row>
                 </Overlay>

@@ -11,6 +11,8 @@ import FunctionButton from '../Shared/FunctionButton'
 import RouteButton from '../Shared/RouteButton'
 import TextInput from '../Shared/TextInput'
 import SelectMultiple from '../Shared/SelectMultiple'
+import * as flex from '../../assets/styling/flexPositions'
+import { ScrollView } from 'react-native'
 
 const actsStore = [
     "Nothing Much",
@@ -31,7 +33,7 @@ const DiaryEntryForm2 = () =>{
     const history = useHistory()
     let {newDiaryEntry, setNewDiaryEntry} = useContext(NewDiaryEntryStore)
     const rowSizes = [
-        12,5,5,8,10,5,30,10,8,7
+        12,6,5,10,6,5,10,3,25,4,10,4
     ]
     if (rowSizes.reduce((a,b) => a + b) !== 100){console.log(rowSizes.reduce((a,b) => a + b))}
 
@@ -56,8 +58,11 @@ const DiaryEntryForm2 = () =>{
 
     const next = () =>{
         setNewDiaryEntry({
-            ...newDiaryEntry
+            ...newDiaryEntry,
+            activities:activities,
+            location:location
         })
+        history.push('/diaryEntryForm3')
     }
 
     return(
@@ -98,22 +103,29 @@ const DiaryEntryForm2 = () =>{
                             <SelectMultiple selected={activities} setSelected={setActivitiesFunc} options={actsStore}/>
                         </Col>
                     </Row>
-                    <Row>
-                        <Col>
-                            <Text>Selected: {
-                                activities.map((element,index) =>{
-                                    return(
-                                        {element} + " : "
-                                    )
-                                })    
-                            }</Text>
-                        </Col>
-                    </Row>
                 </Col>
                 <Col size={1}></Col>
             </Row>
             <Row size={rowSizes[7]}></Row>
             <Row size={rowSizes[8]}>
+                <Col size={1}></Col>
+                <Col size={20} position={flex.mid} style={styles.listContainer}>
+                    <ScrollView contentContainerStyle={styles.scrollContainer}>
+                        {
+                            activities.map((element,index) =>{
+                                return(
+                                    <Text key={element+index} style={styles.text}>
+                                        {element}
+                                    </Text>
+                                )
+                            })
+                        }
+                    </ScrollView>
+                </Col>
+                <Col size={1}></Col>
+            </Row>
+            <Row size={rowSizes[9]}></Row>
+            <Row size={rowSizes[10]}>
                 <Col size={1}></Col>
                 <Col size={5}>
                     <Row>
@@ -122,13 +134,13 @@ const DiaryEntryForm2 = () =>{
                         </Col>
                         <Col size={1}></Col>
                         <Col size={12}>
-                            <RouteButton path={"/diaryEntryForm3"} text={"Next"} colour={colourScheme.Abstract}/>
+                            <FunctionButton funct={next} text={"Next"} color={colourScheme.Abstract}/>
                         </Col>
                     </Row>
                 </Col>
                 <Col size={1}></Col>
             </Row>
-            <Row size={rowSizes[9]}></Row>
+            <Row size={rowSizes[11]}></Row>
         </View>
     )
 }
@@ -136,6 +148,19 @@ const DiaryEntryForm2 = () =>{
 const styles= StyleSheet.create({
     body:{
         height:'100%'
+    },
+    text:{
+        fontSize:20
+    },
+    scrollContainer:{
+        ...flex.mid,
+        width:'100%'
+    },
+    listContainer:{
+        borderColor:'grey',
+        borderStyle:'solid',
+        borderWidth:1, 
+        borderRadius:5
     }
 })
 

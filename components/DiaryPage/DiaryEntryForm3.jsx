@@ -1,7 +1,10 @@
-import React,{useState, useEffect} from 'react'
+import React,{useState, useEffect, useContext} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
+import {useHistory} from 'react-router-native'
+import useDataSource from '../../hooks/useDataSource'
+import {NewDiaryEntryStore, LoggedInUserStore} from '../../data/GlobalStore'
 import colourScheme from '../../assets/styling/colourScheme'
-import {mid} from '../../assets/styling/flexPositions'
+import {flexRow, mid, midLeft} from '../../assets/styling/flexPositions'
 
 import Header from '../Shared/Header'
 import Row from '../Shared/Row'
@@ -9,8 +12,13 @@ import Col from '../Shared/Col'
 import TextInput from '../Shared/TextInput'
 import FunctionButton from '../Shared/FunctionButton'
 import RouteButton from '../Shared/RouteButton'
+import { ScrollView } from 'react-native'
 
 const DiaryEntryForm3 = () =>{
+    const history = useHistory();
+    let{
+        _createDocument
+    } = useDataSource()
     const rowSizes=[
         12,5,4,15,3,4,10,3,26,3,10,5
     ]
@@ -19,6 +27,8 @@ const DiaryEntryForm3 = () =>{
     const [names, setNames] = useState(["tom","sam"])
     const [worryState, setWorryState] = useState(true)
     const [worryText, setWorryText] = useState('')
+    const {newDiaryEntry, setNewDiaryEntry} = useContext(NewDiaryEntryStore)
+    const {loggedInUser, setLoggedInUser} = useContext(LoggedInUserStore)
 
     useEffect(() =>{
         if(worryState === false){
@@ -28,6 +38,38 @@ const DiaryEntryForm3 = () =>{
 
     const handleSetNames = (value) =>{
         setNames([...names, value])
+    }
+
+    const removeName = (value) =>{
+        setNames(names.filter(name => name !== value))
+    }
+
+    const complete = async () =>{
+        setNewDiaryEntry({
+            ...newDiaryEntry,
+            names:names,
+            worries:worryText
+        })
+        let today = new Date()
+        let day = today.getDate()
+        let month = today.getMonth()+1
+        let year = today.getFullYear()
+        if(await _createDocument("diaryentries", {
+            ...newDiaryEntry,
+            names:names,
+            worries:worryText,
+            date:{
+                day:day,
+                month:month,
+                year:year
+            },
+            user:loggedInUser.username
+        }) === true){
+            alert("Diary Entry Created")
+            history.push('/diaryPage')
+        }else{
+            alert("There was a problem creating you diary entry")
+        }
     }
 
     return(
@@ -51,15 +93,30 @@ const DiaryEntryForm3 = () =>{
                 <Col size={1}></Col>
                 <Col size={12}>
                     <Row>
-                        <Col>
+                        <Col size={10}>
                             <NamesComponent setNames={handleSetNames}/>
                         </Col>
-                        <Col>
-                            {
-                                names.map((name, index) =>{
-                                    return <Text key={'name'+index} style={{textAlign:'center'}}>{name}</Text>
-                                })
-                            }
+                        <Col size={1}></Col>
+                        <Col size={10} style={styles.listContainer} position={mid}>
+                            <ScrollView contentContainerStyle={{width:'100%'}}>
+                                {
+                                    names.map((name, index) =>{
+                                        return (
+                                            <Row style={{marginTop:3, height:30}}>
+                                                <Col size={5}>
+                                                    <Text key={'name'+index} style={{textAlign:'center'}}>{name}</Text>
+                                                </Col>
+                                                <Col size={5} position={mid}>
+                                                    <View style={{width:'90%'}}>
+                                                        <FunctionButton funct={removeName} value={name} text={"Remove"}/>
+                                                    </View>
+                                                </Col>
+                                            </Row>
+                                            
+                                        )
+                                    })
+                                }
+                            </ScrollView>
                         </Col>    
                     </Row>    
                 </Col>
@@ -132,7 +189,7 @@ const DiaryEntryForm3 = () =>{
                         </Col>
                         <Col size={1}></Col>
                         <Col size={20}>
-                            <RouteButton path={"/diaryEntrySubmitted"} text={"Complete"} colour={colourScheme.Abstract}/>
+                            <FunctionButton funct={complete} text={"Complete"} color={colourScheme.Abstract}/>
                         </Col>
                     </Row>
                 </Col>
@@ -146,22 +203,34 @@ const DiaryEntryForm3 = () =>{
 const styles=StyleSheet.create({
     body:{
         height:'100%'
+    },
+    listContainer:{
+        borderStyle:'solid',
+        borderColor:'grey',
+        borderWidth:1,
+        borderRadius:5
     }
 })
 
 const NamesComponent = ({size,setNames}) =>{
-    const [name, setName] = useState('Name input')
+    const [name, setName] = useState('')
 
     return(
         <View style={{height:'100%'}}>
-            <Row>
+            <Row size={7}>
                 <Col>
-                    <TextInput value={name} setValue={setName}/>
+                    <TextInput value={name} setValue={setName} placeholder={"Name Input"}/>
                 </Col>
             </Row>
-            <Row>
+            <Row size={1}></Row>
+            <Row size={7}>
                 <Col>
-                    <FunctionButton text={"Add"} value={name} funct={() => {setNames(name);setName('')}}/>
+                    <FunctionButton text={"Add"} value={name} funct={() => {
+                        if(name !== ''){
+                            setNames(name)
+                            setName('')
+                        }
+                    }}/>
                 </Col>
             </Row>
         </View>
