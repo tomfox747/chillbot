@@ -1,6 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react'
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView } from 'react-native';
+import { StyleSheet, Text, View, Dimensions} from 'react-native';
 import colourScheme from './assets/styling/colourScheme';
 import Router from './components/Routers/Router';
 
@@ -37,6 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: colourScheme.Background,
     alignItems: 'center',
     justifyContent: 'flex-start',
+    minHeight: Math.round(Dimensions.get('window').height)
   },
 });
 
