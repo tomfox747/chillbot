@@ -13,6 +13,8 @@ import Arrow from '../../assets/images/arrow.png'
 import FunctionButton from './FunctionButton'
 import { ScrollView } from 'react-native'
 
+import CheckBox from '../../assets/images/checkBox.png'
+
 const SelectMultiple = ({options, setSelected, selected}) =>{
     
     const [expanded, setExpanded] = useState(false);
@@ -38,20 +40,34 @@ const SelectMultiple = ({options, setSelected, selected}) =>{
                 </Row>
             </TouchableOpacity>
             {expanded === true &&
-                <Overlay isVisible={true} onBackdropPress={() => setExpanded(false)} style={styles.overlay}>
-                    <Row>
+                <Overlay isVisible={true} onBackdropPress={() => setExpanded(false)} overlayStyle={styles.overlay}>
+                    <Row size={2}>
                         <Col position={flex.mid}>
-                            <Text>Select a Filter</Text>
+                            <Text>Select Options</Text>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row size={8}>
                         <Col position={flex.mid}>
                             <ScrollView>
                                 {
                                     options.map((element,index) =>{
                                         return(
                                             <TouchableOpacity key={element+index} onPress={(e) => handleSelection(element)} style={styles.dropdown}>
-                                                <Text style={styles.text}>{element}</Text>
+                                                <Row>
+                                                    {selected.includes(element)
+                                                        ?(
+                                                            <Col size={2} position={flex.mid}>
+                                                                <Image source={CheckBox} style={{width:30, height:30}}/>
+                                                            </Col>
+                                                        ):(
+                                                            <Col size={2}></Col>
+                                                        )
+                                                    }
+                                                    <Col size={8} position={flex.mid}>
+                                                        <Text style={styles.text}>{element}</Text>
+                                                    </Col>
+                                                </Row>
+                                                
                                             </TouchableOpacity>
                                         )
                                     })
@@ -59,7 +75,8 @@ const SelectMultiple = ({options, setSelected, selected}) =>{
                             </ScrollView>
                         </Col>
                     </Row>
-                    <Row>
+                    <Row size={1}></Row>
+                    <Row size={2}>
                         <Col position={flex.mid}>
                             <FunctionButton value={false} funct={setExpanded} text={"Close"} color={colourScheme.Abstract}/>
                         </Col>
@@ -87,7 +104,8 @@ const styles = StyleSheet.create({
         borderRadius:5,
     },
     overlay:{
-        height:80
+        height:'70%',
+        width:'80%'
     },
     text:{
         ...flex.mid,
