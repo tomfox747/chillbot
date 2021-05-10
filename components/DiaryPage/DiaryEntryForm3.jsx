@@ -24,7 +24,7 @@ const DiaryEntryForm3 = () =>{
     ]
     if(rowSizes.reduce((a,b) => a + b) !== 100){console.log(rowSizes.reduce((a,b) => a + b))}
 
-    const [names, setNames] = useState(["tom","sam"])
+    const [names, setNames] = useState([])
     const [worryState, setWorryState] = useState(true)
     const [worryText, setWorryText] = useState('')
     const {newDiaryEntry, setNewDiaryEntry} = useContext(NewDiaryEntryStore)
@@ -112,7 +112,6 @@ const DiaryEntryForm3 = () =>{
                                                     </View>
                                                 </Col>
                                             </Row>
-                                            
                                         )
                                     })
                                 }

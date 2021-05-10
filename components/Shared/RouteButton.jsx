@@ -1,4 +1,5 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { TouchableOpacity } from 'react-native'
 import {View, Text, StyleSheet} from 'react-native'
 import {Link} from 'react-router-native'
 
@@ -27,13 +28,13 @@ const RouteButton = ({path,text,colour}) =>{
 
     return (
         <View style={styles.routeButton}>
-            <Link to={path} style={styles.buttonBody}>
-                <View>
-                    <Text style={styles.text}>
-                        {text}
-                    </Text>
-                </View>
-            </Link>
+                <Link to={path} style={styles.buttonBody}>
+                    <View>
+                        <Text style={styles.text}>
+                            {text}
+                        </Text>
+                    </View>
+                </Link>
         </View>
     )
 }

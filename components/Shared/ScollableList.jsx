@@ -2,14 +2,14 @@ import React,{useState} from 'react'
 import {Text, View, ScrollView, StyleSheet} from 'react-native'
 
 const ScrollableList = ({type, list}) =>{
-    
+
     return(
         <ScrollView scrollEnabled={true} style={styles.body}>
             {list.map((element,index) =>{
                     return(
                         React.createElement(
                             type,
-                            {props: element.props },
+                            {props: element},
                             {key:"Entry"+index}
                         )
                     )

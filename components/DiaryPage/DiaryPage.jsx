@@ -1,8 +1,10 @@
-import React,{useState} from 'react'
+import React,{useContext, useState, useEffect} from 'react'
 import {View, Text, StyleSheet} from 'react-native'
 import colourScheme from '../../assets/styling/colourScheme'
 import * as flex from '../../assets/styling/flexPositions'
 import RouteButton from '../Shared/RouteButton'
+import useDataSource from '../../hooks/useDataSource'
+import {LoggedInUserStore} from '../../data/GlobalStore'
 
 import Header from '../Shared/Header'
 import Row from '../Shared/Row'
@@ -21,22 +23,13 @@ const testLocations = ["Home","Gym","Work","Shopping","Restaurant"]
 const testPeople = ["james","sam","mille","rob"]
 
 let date = new Date(Date.now()).toDateString();
-const entries = [
-    {props:{title:"entry 1", date:date}},
-    {props:{title:"entry 2", date:date}},
-    {props:{title:"entry 3", date:date}},
-    {props:{title:"entry 4", date:date}},
-    {props:{title:"entry 5", date:date}},
-    {props:{title:"entry 6", date:date}},
-    {props:{title:"entry 7", date:date}},
-    {props:{title:"entry 8", date:date}},
-    {props:{title:"entry 9", date:date}},
-    {props:{title:"entry 10", date:date}},
-    {props:{title:"entry 11", date:date}},
-    {props:{title:"entry 12", date:date}},
-]
+
 
 const DiaryPage = ({entryAdded}) =>{
+
+    let {
+        _getAllFromCollectionWhere
+    } = useDataSource()
 
     const rowSizes = [
         12,2,7,7,7,1,17,9,34,4
@@ -47,10 +40,29 @@ const DiaryPage = ({entryAdded}) =>{
 
     const [selectedPerson, setSelectedPerson] = useState(testPeople[0])
     const [selectedLocation, setSelectedLocation] = useState(testLocations[0])
+    const {loggedInUser, setLoggedInUser} = useContext(LoggedInUserStore)
+    const [entries, setEntries] = useState([])
 
     if(entryAdded){
         alert("New Diary Entry Added")
     }
+
+    useEffect(() =>{
+        let didCancel = false;
+
+        const loadEntries = async () =>{
+            let res = await _getAllFromCollectionWhere('diaryentries', 'user', '==', loggedInUser.username)
+            if(!didCancel){
+                setEntries(res)
+            }
+        }
+
+        loadEntries()
+
+        return(() =>{
+            didCancel = true
+        })
+    },[])
 
     return(
         <View style={styles.body}>
@@ -103,7 +115,18 @@ const DiaryPage = ({entryAdded}) =>{
                 <Col size={1}></Col>
                 <Col size={10}>
                     <View>
-                        <ScrollableList type={DiaryEntryListItem} list={entries}/>
+                        <Text>Your Entries</Text>
+                        {entries.length === 0
+                            ?(
+                                <View>
+                                    <Text>No Entries to Display</Text>        
+                                </View>
+                            )
+                            :(
+                                <ScrollableList type={DiaryEntryListItem} list={entries}/>
+                            )
+                        }
+                        
                     </View>
                 </Col>
                 <Col size={1}></Col>

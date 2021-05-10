@@ -3,6 +3,7 @@ import {View, Text, StyleSheet} from 'react-native'
 import {useHistory} from 'react-router-native'
 import {NewDiaryEntryStore} from '../../data/GlobalStore'
 import colourScheme from '../../assets/styling/colourScheme'
+import {LocationStore} from '../../data/GlobalStore'
 
 import Header from '../Shared/Header'
 import Col from '../Shared/Col'
@@ -32,16 +33,17 @@ const actsStore = [
 const DiaryEntryForm2 = () =>{
     const history = useHistory()
     let {newDiaryEntry, setNewDiaryEntry} = useContext(NewDiaryEntryStore)
+    let {location} = useContext(LocationStore)
     const rowSizes = [
         12,6,5,10,6,5,10,3,25,4,10,4
     ]
     if (rowSizes.reduce((a,b) => a + b) !== 100){console.log(rowSizes.reduce((a,b) => a + b))}
 
-    const [location, setLocation] = useState(null)
+    const [location_local, setLocation_local] = useState(null)
     const [activities, setActivities] = useState([])
 
-    const getLocation = (loc) =>{
-        setLocation(loc)
+    const getLocation = (x) =>{
+        setLocation_local(x)
     }
 
     const setActivitiesFunc = (act) =>{
@@ -83,7 +85,13 @@ const DiaryEntryForm2 = () =>{
             <Row size={rowSizes[3]}>
                 <Col size={1}></Col>
                 <Col size={20}>
-                    <FunctionButton text={"Get Location"} value={{x:0,y:0}} funct={getLocation}/>
+                    {location === null
+                        ?(
+                            <FunctionButton text={"Get Location"} value={location} funct={getLocation}/>
+                        ):(
+                            <FunctionButton text={"Latitude : " + location.latitude + "\nLongitude : " + location.longitude} value={location} funct={getLocation}/>
+                        )
+                    }
                 </Col>
                 <Col size={1}></Col>
             </Row>

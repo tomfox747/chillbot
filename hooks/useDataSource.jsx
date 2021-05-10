@@ -34,9 +34,16 @@ const useDataSource = () =>{
 
     const _getAllFromCollection = async (collection) =>{
         let responseRef = await dbh.collection(collection);
-        let response = await userRef.where('username', '==', 'tomfox747').get();
+        let response = await userRef.get();
         response = toDataArray(response)
         return response
+    }
+
+    const _getAllFromCollectionWhere = async (collection, compare, operator, value) =>{
+        let Ref = await dbh.collection(collection)
+        let res = await Ref.where(compare, operator, value).get();
+        res = toDataArray(res)
+        return res
     }
 
     const _createDocument = async (collection, object) =>{
@@ -62,6 +69,7 @@ const useDataSource = () =>{
         _authenticate,
         _getAllFromCollection,
         _createDocument,
+        _getAllFromCollectionWhere
     })
 }
 

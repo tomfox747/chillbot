@@ -5,7 +5,7 @@ import { StyleSheet, Text, View, Dimensions} from 'react-native';
 import colourScheme from './assets/styling/colourScheme';
 import Router from './components/Routers/Router';
 
-import {LocationStore, LoggedInUserStore, RegistrationStore, NewDiaryEntryStore} from './data/GlobalStore'
+import {LocationStore, LoggedInUserStore, RegistrationStore, NewDiaryEntryStore, SelectedEntryStore} from './data/GlobalStore'
 import useGeolocation from './hooks/useGeolocation';
 
 const App = () => {
@@ -13,6 +13,7 @@ const App = () => {
   const [loggedInUser, setLoggedInUser] = useState("")
   const [newUser, setNewUser] = useState({})
   const [newDiaryEntry, setNewDiaryEntry] = useState({})
+  const [selectedEntry, setSelectedEntry] = useState({})
 
   return (
     <View style={styles.container}>
@@ -20,7 +21,9 @@ const App = () => {
       <LoggedInUserStore.Provider value={{loggedInUser, setLoggedInUser}}>
       <RegistrationStore.Provider value={{newUser, setNewUser}}>
       <NewDiaryEntryStore.Provider value={{newDiaryEntry, setNewDiaryEntry}}>
+      <SelectedEntryStore.Provider value={{selectedEntry,setSelectedEntry}}>
         <Router/>
+      </SelectedEntryStore.Provider>
       </NewDiaryEntryStore.Provider>
       </RegistrationStore.Provider>
       </LoggedInUserStore.Provider>

@@ -45,7 +45,7 @@ const LoginRouter = () =>{
                 <Route path="/diaryEntryForm1"component={DiaryEntryForm1}/>
                 <Route path="/diaryEntryForm2"component={DiaryEntryForm2}/>
                 <Route path="/diaryEntryForm3"component={DiaryEntryForm3}/>
-                <Route path="/viewEntryPage"component={ViewEntriesPage}/>
+                <Route path="/viewEntryPage" component={ViewEntriesPage}/>
 
 
                 <Route path="/needAChatPage"component={NeedAChatPage}/>
