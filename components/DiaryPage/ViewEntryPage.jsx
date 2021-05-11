@@ -1,5 +1,5 @@
 import React,{useContext, useState} from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, Image} from 'react-native'
 import MapView,{Marker} from 'react-native-maps'
 import {SelectedEntryStore} from '../../data/GlobalStore'
 import Header from '../Shared/Header'
@@ -9,6 +9,7 @@ import { midLeft, midRight, mid } from '../../assets/styling/flexPositions'
 import FunctionButton from '../Shared/FunctionButton'
 import { ScrollView } from 'react-native'
 
+import noLocation from '../../assets/images/nolocation.jpg'
 
 const ViewEntriesPage = () =>{
     const rowSizes=[12,1,5,7,15,3,7,15,3,5,29,3]
@@ -20,7 +21,7 @@ const ViewEntriesPage = () =>{
         <View style={styles.body}>
             <Row size={rowSizes[0]}>
                 <Col>
-                    <Header BackButton={{Route:'/diaryPage'}} HeaderText={selectedEntry.date.day + "/" + selectedEntry.date.month + "/" + selectedEntry.date.year}/>
+                    <Header BackButton={{Route:'/diaryPage'}} HeaderText={"Entry " + selectedEntry.date.day + "/" + selectedEntry.date.month + "/" + selectedEntry.date.year}/>
                 </Col>
             </Row>
             <Row size={rowSizes[1]}>
@@ -29,7 +30,7 @@ const ViewEntriesPage = () =>{
             <Row size={rowSizes[2]}>
                 <Col size={1}></Col>
                 <Col size={4} position={midLeft}>
-                    <Text>State Of Mind:</Text> 
+                    <Text>State Of Mind:</Text>
                 </Col>
                 <Col size={6} position={midLeft}>
                     <Text>{selectedEntry.stateOfMind} / 10</Text>
@@ -119,27 +120,34 @@ const ViewEntriesPage = () =>{
             <Row size={rowSizes[9]}>
                 <Col size={1}></Col>
                 <Col size={10}>
-                    <Text>Location of Diary Entry:</Text>
+                    <Text>Location of Diary Entry: {selectedEntry.location === null && "No Location"}</Text>
                 </Col>
                 <Col size={1}></Col>
             </Row>
             <Row size={rowSizes[10]}>
                 <Col size={1}></Col>
                 <Col size={10}>
-                    <MapView 
-                        style={styles.map} 
-                        initialRegion={{
-                            latitude:selectedEntry.location.latitude, 
-                            longitude:selectedEntry.location.longitude,
-                            latitudeDelta:0.01,
-                            longitudeDelta:0.01
-                        }}
-                    >
-                        <Marker
-                          key={'pin'}
-                          coordinate={selectedEntry.location}
-                       />
-                    </MapView>
+                    {selectedEntry.location !== null
+                        ?(
+                            <MapView 
+                                style={styles.map} 
+                                initialRegion={{
+                                    latitude:selectedEntry.location.latitude, 
+                                    longitude:selectedEntry.location.longitude,
+                                    latitudeDelta:0.01,
+                                    longitudeDelta:0.01
+                                }}
+                            >
+                                <Marker
+                                key={'pin'}
+                                coordinate={selectedEntry.location}
+                            />
+                            </MapView>
+                        ):(
+                            <Image source={noLocation} style={{width:'100%', height:'100%'}}/>
+                        )
+                    }
+                    
                 </Col>
                 <Col size={1}></Col>
             </Row>

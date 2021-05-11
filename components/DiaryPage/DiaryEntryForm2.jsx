@@ -1,5 +1,5 @@
-import React,{useState, useContext} from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import React,{useState, useContext, useEffect} from 'react'
+import {View, Text, StyleSheet, Switch} from 'react-native'
 import {useHistory} from 'react-router-native'
 import {NewDiaryEntryStore} from '../../data/GlobalStore'
 import colourScheme from '../../assets/styling/colourScheme'
@@ -34,17 +34,23 @@ const DiaryEntryForm2 = () =>{
     const history = useHistory()
     let {newDiaryEntry, setNewDiaryEntry} = useContext(NewDiaryEntryStore)
     let {location} = useContext(LocationStore)
+    
     const rowSizes = [
-        12,6,5,10,6,5,10,3,25,4,10,4
+        12,5,9,4,7,7,10,4,28,4,10,4
     ]
     if (rowSizes.reduce((a,b) => a + b) !== 100){console.log(rowSizes.reduce((a,b) => a + b))}
 
     const [location_local, setLocation_local] = useState(null)
     const [activities, setActivities] = useState([])
+    const [includeLocation, setIncludeLocation] = useState(true)
 
-    const getLocation = (x) =>{
-        setLocation_local(x)
-    }
+    useEffect(() =>{
+        if(includeLocation){
+            setLocation_local(location)
+        }else{
+            setLocation_local(null)
+        }
+    },[includeLocation])
 
     const setActivitiesFunc = (act) =>{
         if(activities.includes(act)){
@@ -62,7 +68,7 @@ const DiaryEntryForm2 = () =>{
         setNewDiaryEntry({
             ...newDiaryEntry,
             activities:activities,
-            location:location
+            location:location_local
         })
         history.push('/diaryEntryForm3')
     }
@@ -71,27 +77,23 @@ const DiaryEntryForm2 = () =>{
         <View style={styles.body}>
             <Row size={rowSizes[0]}>
                 <Col>
-                    <Header BackButton={{Route:'/diaryPage'}} HeaderText={"Your mental health diary, new entry"}/>
+                    <Header BackButton={{Route:'/diaryPage'}} HeaderText={"New Entry"}/>
                 </Col>
             </Row>
             <Row size={rowSizes[1]}></Row>
             <Row size={rowSizes[2]}>
                 <Col size={1}></Col>
-                <Col size={20}>
-                    <Text>Where are you at the moment?</Text>
+                <Col size={10}>
+                    <Text>Include Location: </Text>
                 </Col>
-                <Col size={1}></Col>
-            </Row>
-            <Row size={rowSizes[3]}>
-                <Col size={1}></Col>
-                <Col size={20}>
-                    {location === null
-                        ?(
-                            <FunctionButton text={"Get Location"} value={location} funct={getLocation}/>
-                        ):(
-                            <FunctionButton text={"Latitude : " + location.latitude + "\nLongitude : " + location.longitude} value={location} funct={getLocation}/>
-                        )
-                    }
+                <Col size={10}>
+                    <Switch
+                        trackColor={{ false: "#767577", true: "#81b0ff" }}
+                        thumbColor={includeLocation ? colourScheme.LightTone : "#f4f3f4"}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={() => setIncludeLocation(!includeLocation)}
+                        value={includeLocation}
+                    />
                 </Col>
                 <Col size={1}></Col>
             </Row>

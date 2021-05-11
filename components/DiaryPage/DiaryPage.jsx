@@ -1,5 +1,5 @@
 import React,{useContext, useState, useEffect} from 'react'
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, ScrollView} from 'react-native'
 import colourScheme from '../../assets/styling/colourScheme'
 import * as flex from '../../assets/styling/flexPositions'
 import RouteButton from '../Shared/RouteButton'
@@ -18,9 +18,7 @@ import DropDown from '../Shared/DropDown'
 import FunctionButton from '../Shared/FunctionButton'
 
 
-const testOptions = ["Date","Mood","Location","People","Sleep"];
-const testLocations = ["Home","Gym","Work","Shopping","Restaurant"]
-const testPeople = ["james","sam","mille","rob"]
+const filters = ["Date","Mood","People"];
 
 let date = new Date(Date.now()).toDateString();
 
@@ -32,16 +30,21 @@ const DiaryPage = ({entryAdded}) =>{
     } = useDataSource()
 
     const rowSizes = [
-        12,2,7,7,7,1,17,9,34,4
+        12,2,7,7,7,1,20,6,34,4
     ]
     if(rowSizes.reduce((a,b) => a + b) !== 100){console.log("grid error, row sizes = " + rowSizes.reduce((a,b) => a + b))}
 
-    const [selected, setSelected] = useState(testOptions[0]);
+    const [selectedFilter, setSelectedFilter] = useState(filters[0]);
 
-    const [selectedPerson, setSelectedPerson] = useState(testPeople[0])
-    const [selectedLocation, setSelectedLocation] = useState(testLocations[0])
+    const [selectedPeople, setSelectedPeople] = useState([])
+    const [mood, setMood] = useState(0)
+    const [sleep, setSleep] = useState(0)
+    const [day,setDay] = useState(0)
+    const [month, setMonth] = useState(0)
+    const [year, setYear] = useState(0)
     const {loggedInUser, setLoggedInUser} = useContext(LoggedInUserStore)
     const [entries, setEntries] = useState([])
+    const [filteredEntires, setFilteredEntries] = useState([])
 
     if(entryAdded){
         alert("New Diary Entry Added")
@@ -54,6 +57,7 @@ const DiaryPage = ({entryAdded}) =>{
             let res = await _getAllFromCollectionWhere('diaryentries', 'user', '==', loggedInUser.username)
             if(!didCancel){
                 setEntries(res)
+                setFilteredEntries(res)
             }
         }
 
@@ -63,6 +67,38 @@ const DiaryPage = ({entryAdded}) =>{
             didCancel = true
         })
     },[])
+
+    //filter handlers
+    //////////////////////////////////
+    const setMoodHandler = (value) =>{
+        setMood(value)
+    }
+    useEffect(() =>{
+        if(selectedFilter === 'Mood'){
+            let res = entries.filter(entry => entry.stateOfMind == mood)
+            setFilteredEntries(res)
+        }
+    },[mood])
+
+    useEffect(() =>{
+        if(selectedFilter === 'People'){
+            let res = []
+            selectedPeople.forEach(person =>{
+                let ents = entries.filter(entry => entry.names.includes(person))
+                res = [...res, ...ents]
+            })
+            setFilteredEntries(res)
+        }
+    },[selectedPeople])
+
+    const setDateFilter=(dateObject) =>{
+        if(selectedFilter === 'Date'){
+            let res = entries.filter(entry => entry.date.day == dateObject.day && entry.date.month == dateObject.month && entry.date.year == dateObject.year)
+            setFilteredEntries(res)
+        }
+    }
+
+    //////////////////////////////////
 
     return(
         <View style={styles.body}>
@@ -90,7 +126,11 @@ const DiaryPage = ({entryAdded}) =>{
                     <Text>Filter by :</Text>
                 </Col>
                 <Col size={7}>
-                    <Dropdown options={testOptions} setSelected={setSelected} selected={selected}/>
+                    <Dropdown options={filters} setSelected={setSelectedFilter} selected={selectedFilter}/>
+                </Col>
+                <Col size={1}></Col>
+                <Col size={3}>
+                    <FunctionButton text={"clear"} color={colourScheme.Abstract} funct={setFilteredEntries} value={entries}/>
                 </Col>
                 <Col size={1}></Col>
             </Row>
@@ -100,11 +140,12 @@ const DiaryPage = ({entryAdded}) =>{
                 <Col size={1}></Col>
                 <Col size={10} position={flex.mid}>
                     <FilterComponent 
-                        type={selected} 
-                        selectedPerson={selectedPerson}
-                        setSelectedPerson={setSelectedPerson}
-                        selectedLocation={selectedLocation}
-                        setSelectedLocation={setSelectedLocation}
+                        type={selectedFilter} 
+                        selectedPeople={selectedPeople}
+                        setSelectedPeople={setSelectedPeople}
+                        mood={mood}
+                        setMood={setMoodHandler}
+                        setDateFilter={setDateFilter}
                     />
                 </Col>
                 <Col size={1}></Col>
@@ -123,7 +164,7 @@ const DiaryPage = ({entryAdded}) =>{
                                 </View>
                             )
                             :(
-                                <ScrollableList type={DiaryEntryListItem} list={entries}/>
+                                <ScrollableList type={DiaryEntryListItem} list={filteredEntires}/>
                             )
                         }
                         
@@ -139,99 +180,106 @@ const DiaryPage = ({entryAdded}) =>{
 const styles= StyleSheet.create({
     body:{
         flex:1
+    },
+    listContainer:{
+        borderStyle:'solid',
+        borderColor:'grey',
+        borderWidth:1,
+        borderRadius:5
     }
-})
+})    
 
 
-const FilterComponent = ({type, selectedPerson, setSelectedPerson, selectedLocation, setSelectedLocation}) =>{
+const FilterComponent = ({type, selectedPeople, setSelectedPeople, mood, setMood, setDateFilter}) =>{
 
     if(type==="Mood"){
         return(
-            <MoodFilter/>
-        )
-    }
-    
-    if(type === "Sleep"){
-        return(
-            <SleepFilter/>
+            <MoodFilter setSelected={setMood} selected={mood}/>
         )
     }
 
     if(type==="People"){
         return(
-            <PeopleFilter selectedPerson={selectedPerson} setSelectedPerson={setSelectedPerson}/>
-        )
-    }
-    
-    if(type==="Location"){
-        return(
-            <LocationFilter selectedLocation={selectedLocation} setSelectedLocation={setSelectedLocation}/>
+            <PeopleFilter selectedPeople={selectedPeople} setSelectedPeople={setSelectedPeople}/>
         )
     }
     
     if(type==="Date"){
         return(
-            <DateFilter/>
+            <DateFilter setDateFilter={setDateFilter}/>
         )
     }
-    
 }
 
-const MoodFilter = () =>{
+const MoodFilter = ({selected, setSelected}) =>{
 
     return(
         <View style={{...styles.body,...flex.midLeft}}>
             <Text>Select your mood rating:</Text>
-            <Slider/>
+            <Slider selected={selected} setSelected={setSelected}/>
         </View>
     )
 }
 
-const SleepFilter = () =>{
+const PeopleFilter = ({selectedPeople, setSelectedPeople}) =>{
 
-    return(
-        <View style={{...styles.body,...flex.midLeft}}>
-            <Text>Select your sleep rating:</Text>
-            <Slider/>            
-        </View>
-    )
-}
+    const [name, setName] = useState('')
 
-const PeopleFilter = ({selectedPerson, setSelectedPerson}) =>{
+    const removeName = (value) =>{
+        let result = selectedPeople.filter(name => name !== value)
+        setSelectedPeople(result)
+    }
 
     return(
         <View style={{...styles.body,...flex.mid}}>
-            <Row>
+            <Row size={1}>
                 <Col position={flex.midLeft}>
                     <Text>Select the filter by person:</Text>
                 </Col>
             </Row>
-            <Row>
+            <Row size={3}>
                 <Col>
-                    <DropDown options={testPeople} selected={selectedPerson} setSelected={setSelectedPerson}/>
+                    <Row>
+                        <Col>
+                            <TextInput value={name} setValue={setName} placeholder={"input name"}/>
+                        </Col>    
+                    </Row>
+                    <Row>
+                        <Col>
+                            <FunctionButton value={name} text={"Add person"} funct={() => {
+                                if(name !== ''){
+                                    setSelectedPeople([...selectedPeople, name])
+                                    setName('')
+                                }
+                            }}/>
+                        </Col>
+                    </Row>
+                </Col>
+                <Col style={styles.listContainer} position={flex.mid}>
+                    <ScrollView contentContainerStyle={{width:'100%'}}>
+                        {
+                            selectedPeople.map((name, index) =>{
+                                return (
+                                    <Row style={{marginTop:3, height:30}}>
+                                        <Col size={5}>
+                                            <Text key={'name'+index} style={{textAlign:'center'}}>{name}</Text>
+                                        </Col>
+                                        <Col size={5} position={flex.mid}>
+                                            <View style={{width:'90%'}}>
+                                                <FunctionButton funct={removeName} value={name} text={"Remove"}/>
+                                            </View>
+                                        </Col>
+                                    </Row>
+                                )
+                            })
+                        }
+                    </ScrollView>
                 </Col>
             </Row>
         </View>
     )
 }
 
-const LocationFilter = ({selectedLocation, setSelectedLocation}) =>{
-
-    return(
-        <View style={{...styles.body,...flex.mid}}>
-            <Row>
-                <Col position={flex.midLeft}>
-                    <Text>Select the filter location:</Text>    
-                </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <DropDown options={testLocations} selected={selectedLocation} setSelected={setSelectedLocation}/>
-                </Col>
-            </Row>
-        </View>
-    )
-}
 
 const DateFilter = ({setDateFilter}) =>{
     const [day, setDay] = useState("")
@@ -269,7 +317,7 @@ const DateFilter = ({setDateFilter}) =>{
             <Row size={10}>
                 <Col>
                     <View>
-                        <FunctionButton value={day+"/"+month+"/"+year} funct={setDateFilter} text={"Set Date"}/>
+                        <FunctionButton value={{day:day,month:month,year:year}} funct={setDateFilter} text={"Set Date"}/>
                     </View>
                 </Col>
             </Row>

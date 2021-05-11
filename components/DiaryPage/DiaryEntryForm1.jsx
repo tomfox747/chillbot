@@ -37,7 +37,7 @@ const DiaryEntryForm1 = () =>{
         <View style={styles.body}>
             <Row size={rowSizes[0]}>
                 <Col>
-                    <Header HeaderText={"Your Mental Health Diary, new entry"}/>
+                    <Header HeaderText={"New Entry"}/>
                 </Col>
             </Row>
             <Row size={rowSizes[1]}></Row>
