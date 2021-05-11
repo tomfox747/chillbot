@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "chillbot-v1",
-    "slug": "chillbot-v1",
+    "name": "chillbot",
+    "slug": "chillbot",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,7 +24,7 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
-      "permissions":[
+      "permissions": [
         "ACCESS_FINE_LOCATION"
       ]
     },
@@ -32,7 +32,9 @@
       "favicon": "./assets/favicon.png",
       "build": {
         "babel": {
-          "include": ["react-router-native"]
+          "include": [
+            "react-router-native"
+          ]
         }
       }
     },
