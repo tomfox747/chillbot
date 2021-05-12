@@ -1,3 +1,5 @@
+//app link https://expo.io/@tfox747/projects/chillbot
+
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react'
 import { ScrollView } from 'react-native';
