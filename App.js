@@ -6,7 +6,6 @@ import { ScrollView } from 'react-native';
 import { StyleSheet, Text, View, Dimensions} from 'react-native';
 import colourScheme from './assets/styling/colourScheme';
 import Router from './components/Routers/Router';
-
 import {LocationStore, LoggedInUserStore, RegistrationStore, NewDiaryEntryStore, SelectedEntryStore} from './data/GlobalStore'
 import useGeolocation from './hooks/useGeolocation';
 

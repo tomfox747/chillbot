@@ -18,7 +18,7 @@ const useDataSource = () =>{
     if (!firebase.apps.length) {
         firebase.initializeApp(firebaseConfig);
     }else {
-        firebase.app(); // if already initialized, use that one
+        firebase.app();
     }
     const dbh = firebase.firestore();  
     
@@ -34,7 +34,7 @@ const useDataSource = () =>{
 
     const _getAllFromCollection = async (collection) =>{
         let responseRef = await dbh.collection(collection);
-        let response = await userRef.get();
+        let response = await responseRef.get();
         response = toDataArray(response)
         return response
     }

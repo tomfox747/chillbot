@@ -16,7 +16,6 @@ const useGeoLocation = () =>{
                 if(res.status === "granted"){
                     setLocationPersmission(true)
                     watchFunc();
-                    //getLocation();
                 }else{
                     setLocationPersmission(false)
                 }
@@ -46,14 +45,6 @@ const useGeoLocation = () =>{
         }
         
         initLocation();
-        //watchLocation();
-        
-        /*const interval = setInterval(() => {
-            if(locationPermission === true){
-                getLocation();
-            }
-        }, 1000);*/
-        //return () => clearInterval(interval);
     },[])
 
     return location;
