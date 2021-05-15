@@ -10,11 +10,7 @@ import RouteButton from '../Shared/RouteButton'
 
 const HomePage = () =>{
     let {loggedInUser, setLoggedInUser} = useContext(LoggedInUserStore)
-
-    const rowSizes = [
-        12,3,6,5,11,3,11,3,11,35
-    ]
-    if(rowSizes.reduce((a,b) => a + b) !== 100){console.log("grid error, row sizes = " + rowSizes.reduce((a,b) => a + b))}
+    const rowSizes = [12,3,6,5,11,3,11,3,11,3,11,21]
 
     return(
         <View style={styles.body}>
@@ -51,11 +47,19 @@ const HomePage = () =>{
             <Row size={rowSizes[8]}>
             <Col size={1}></Col>
                 <Col size={5}>
-                    <RouteButton path={"/settingsPage"} text={"Settings"} colour={colourScheme.LightTone}/>
+                    <RouteButton path={"/cheerMeUpPage"} text={"Cheer Me Up"} colour={colourScheme.LightTone}/>        
                 </Col>
                 <Col size={1}></Col>
             </Row>
             <Row size={rowSizes[9]}></Row>
+            <Row size={rowSizes[10]}>
+            <Col size={1}></Col>
+                <Col size={5}>
+                    <RouteButton path={"/settingsPage"} text={"Settings"} colour={colourScheme.LightTone}/>
+                </Col>
+                <Col size={1}></Col>
+            </Row>
+            <Row size={rowSizes[11]}></Row>
         </View>
     )
 }
